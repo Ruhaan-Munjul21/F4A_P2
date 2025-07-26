@@ -1,0 +1,146 @@
+# Website Development Prompt: Fencing for Everyone
+
+## Project Overview
+Create a comprehensive, modern website for "Fencing for Everyone" - a nonprofit organization that provides free fencing classes and equipment to underprivileged students.
+
+## Core Mission
+Make fencing accessible to everyone, regardless of economic background, through free classes, gear donations, and community support.
+
+## Required Pages/Sections
+
+### 1. Homepage
+- Hero section with compelling mission statement
+- Quick overview of services
+- Call-to-action buttons for donations and class registration
+- Success stories/testimonials
+- Statistics on students helped
+
+### 2. About Us
+- Organization history and founding story
+- Mission, vision, and values
+- Impact metrics and achievements
+- Community partnerships
+
+### 3. Our Team
+- Staff and instructor profiles with photos
+- Volunteer spotlights
+- Board of directors information
+- Coach certifications and experience
+
+### 4. Services for Students
+- Free class programs and schedules
+- Skill levels offered (beginner to advanced)
+- Age groups served
+- Registration process
+- Scholarship information
+- Success stories from students
+
+### 5. Camps & Programs
+- Summer camps
+- After-school programs
+- Weekend workshops
+- Competition training
+- Special events and tournaments
+
+### 6. Gear Donation Marketplace
+- **Key Feature**: Build an in-app marketplace for used fencing gear
+- Categories: masks, jackets, gloves, weapons, bags, etc.
+- User profiles for donors and recipients
+- Search and filter functionality
+- Request system for needed equipment
+- Photo upload capability
+- Condition ratings and descriptions
+- Simple messaging system between users
+
+### 7. Donations & Support
+- Multiple donation options (one-time, monthly, gear)
+- Endowment fund information
+- Corporate sponsorship opportunities
+- Volunteer sign-up
+- Wish list of needed items
+- Tax-deductible donation receipts
+
+### 8. Gallery/Media
+- Photo galleries from classes and events
+- Video testimonials
+- News and updates
+- Press coverage
+
+### 9. Contact & Location
+- Contact information
+- Class locations and directions
+- Hours of operation
+- FAQ section
+
+## Technical Requirements
+
+### Design & User Experience
+- Modern, responsive design that works on all devices
+- Professional but approachable aesthetic
+- Easy navigation with clear menu structure
+- Fast loading times
+- Accessibility features (WCAG compliance)
+
+### Functionality
+- Contact forms with email integration
+- Event calendar integration
+- User registration system for classes
+- Gear marketplace with user accounts
+- Payment processing for donations
+- Email newsletter signup
+- Social media integration
+
+### Marketplace Features (Priority)
+- User authentication system
+- Item listing creation with photos
+- Search and filtering by category, size, condition
+- User profiles and ratings
+- Messaging system between users
+- Admin panel for moderation
+- Email notifications for matches/requests
+
+## Content Tone
+- Inspiring and welcoming
+- Professional yet approachable
+- Emphasize inclusivity and accessibility
+- Highlight community impact
+- Showcase student achievements
+
+## Visual Elements
+- High-quality photos of students in action
+- Diverse representation in imagery
+- Clean, modern color scheme
+- Professional typography
+- Icons for different sections
+- Interactive elements and hover effects
+
+## Technical Stack Suggestions
+- Frontend: React, HTML5, CSS3, JavaScript
+- Backend: Node.js, Express (if needed)
+- Database: PostgreSQL or MongoDB (for user accounts and marketplace)
+- Authentication: Auth0 or similar
+- Payment: Stripe for donations
+- Hosting: Vercel, Netlify, or similar
+
+## Key Success Metrics
+- Easy gear donation/request process
+- Clear path for student registration
+- Intuitive donation flow
+- Mobile-friendly experience
+- Fast loading marketplace
+
+## Special Considerations
+- Emphasize the "free" aspect of classes prominently
+- Make gear donation process as simple as possible
+- Ensure student privacy and safety
+- Include parental consent features where needed
+- Highlight tax benefits of donations
+
+## Call-to-Action Priority
+1. Register for free classes
+2. Donate gear through marketplace
+3. Make financial donation
+4. Volunteer opportunities
+5. Follow on social media
+
+Please create a fully functional website that captures the spirit of making fencing accessible to all students while providing a robust platform for the gear donation marketplace.
