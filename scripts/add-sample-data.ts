@@ -1,3 +1,6 @@
+import { config } from "dotenv";
+config(); // Load environment variables
+
 import { db } from "../server/db";
 import { marketplaceItems } from "../shared/schema";
 
@@ -11,7 +14,8 @@ async function addSampleData() {
         condition: 'like new',
         size: 'Medium',
         imageUrl: null,
-        donorId: '7911928',
+        donorName: 'Sarah Johnson',
+        donorEmail: 'sarah@example.com',
         isAvailable: true
       },
       {
@@ -21,7 +25,8 @@ async function addSampleData() {
         condition: 'good',
         size: '5',
         imageUrl: null,
-        donorId: '7911928',
+        donorName: 'Mike Chen',
+        donorEmail: 'mike@example.com',
         isAvailable: true
       },
       {
@@ -31,7 +36,8 @@ async function addSampleData() {
         condition: 'fair',
         size: 'Youth Large',
         imageUrl: null,
-        donorId: '7911928',
+        donorName: 'Alex Rivera',
+        donorEmail: 'alex@example.com',
         isAvailable: true
       },
       {
@@ -41,7 +47,8 @@ async function addSampleData() {
         condition: 'good',
         size: 'Large',
         imageUrl: null,
-        donorId: '7911928',
+        donorName: 'Jordan Smith',
+        donorEmail: 'jordan@example.com',
         isAvailable: true
       },
       {
@@ -51,7 +58,8 @@ async function addSampleData() {
         condition: 'new',
         size: 'Standard',
         imageUrl: null,
-        donorId: '7911928',
+        donorName: 'Anonymous',
+        donorEmail: 'anonymous@example.com',
         isAvailable: true
       },
       {
@@ -61,7 +69,8 @@ async function addSampleData() {
         condition: 'like new',
         size: '5',
         imageUrl: null,
-        donorId: '7911928',
+        donorName: 'Taylor Wilson',
+        donorEmail: 'taylor@example.com',
         isAvailable: true
       }
     ];

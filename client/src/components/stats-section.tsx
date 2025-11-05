@@ -4,13 +4,14 @@ interface StatData {
   value: number;
   label: string;
   color: string;
+  suffix?: string;
 }
 
 const statsData: StatData[] = [
-  { value: 2847, label: "Students Helped", color: "text-primary" },
-  { value: 1234, label: "Gear Items Donated", color: "text-emerald-600" },
-  { value: 156, label: "Free Classes Offered", color: "text-purple-600" },
-  { value: 89, label: "Active Volunteers", color: "text-yellow-500" },
+  { value: 50, label: "Students Helped", color: "text-primary", suffix: "+" },
+  { value: 63, label: "Sets of Gear Collected", color: "text-emerald-600", suffix: "+" },
+  { value: 2, label: "Scholarship Athletes", color: "text-purple-600" },
+  { value: 2000, label: "Raised", color: "text-yellow-500", suffix: "$+" },
 ];
 
 export default function StatsSection() {
@@ -41,7 +42,7 @@ export default function StatsSection() {
   const animateCounters = () => {
     statsData.forEach((stat, index) => {
       let currentValue = 0;
-      const increment = stat.value / 100;
+      const increment = stat.value / 50; // Slower animation for smaller numbers
       const timer = setInterval(() => {
         currentValue += increment;
         if (currentValue >= stat.value) {
@@ -53,22 +54,32 @@ export default function StatsSection() {
           newValues[index] = Math.floor(currentValue);
           return newValues;
         });
-      }, 20);
+      }, 30); // Slightly slower for better effect
     });
   };
 
   return (
-    <section ref={sectionRef} className="py-16 bg-white">
+    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-white to-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Our Impact in <span className="text-primary">Numbers</span>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Real results from our community's dedication to making fencing accessible to everyone
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {statsData.map((stat, index) => (
-            <div key={index} className="text-center">
+            <div key={index} className="text-center group hover:scale-105 transition-transform duration-300">
               <div
-                className={`text-4xl font-bold ${stat.color} mb-2 stat-counter`}
+                className={`text-4xl md:text-5xl lg:text-6xl font-bold ${stat.color} mb-3 stat-counter transition-all duration-300`}
               >
+                {stat.suffix?.includes("$") && "$"}
                 {animatedValues[index].toLocaleString()}
+                {stat.suffix?.includes("+") && "+"}
               </div>
-              <div className="text-muted-foreground">{stat.label}</div>
+              <div className="text-sm md:text-base text-muted-foreground font-medium">{stat.label}</div>
             </div>
           ))}
         </div>

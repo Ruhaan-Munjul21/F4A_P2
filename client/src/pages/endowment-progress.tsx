@@ -2,44 +2,27 @@ import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Users, DollarSign, Target, Calendar, ArrowUpRight, Heart } from "lucide-react";
+import { TrendingUp, Users, DollarSign, Target, ArrowUpRight, Heart, GraduationCap, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 
 export default function EndowmentProgress() {
-  // Endowment data - in a real app, this would come from an API
+  // Endowment data - simplified and focused
   const endowmentData = {
-    currentAmount: 2300000, // $2.3M
-    goalAmount: 5000000,    // $5M
-    yearlyDistribution: 115000, // 5% of current endowment
-    studentsSupported: 847,
-    programsExpanded: 3,
-    recentDonations: [
-      { amount: 50000, donor: "Anonymous Foundation", date: "2024-12-15", type: "Major Gift" },
-      { amount: 25000, donor: "Johnson Family Foundation", date: "2024-12-10", type: "Family Foundation" },
-      { amount: 15000, donor: "Community Fundraising Event", date: "2024-12-01", type: "Event Proceeds" },
-      { amount: 10000, donor: "Corporate Sponsor", date: "2024-11-28", type: "Corporate Gift" },
-      { amount: 5000, donor: "Alumni Giving Campaign", date: "2024-11-20", type: "Alumni Gift" },
-    ],
-    milestones: [
-      { amount: 1000000, date: "2022-06-15", description: "First $1M milestone reached", achieved: true },
-      { amount: 2000000, date: "2024-03-20", description: "Second $1M milestone reached", achieved: true },
-      { amount: 3000000, date: "2025-06-01", description: "Halfway to our goal", achieved: false },
-      { amount: 4000000, date: "2026-12-01", description: "80% of goal achieved", achieved: false },
-      { amount: 5000000, date: "2027-12-31", description: "Full endowment goal reached", achieved: false },
-    ],
-    impactMetrics: {
-      studentsPerYear: 847,
-      averageCostPerStudent: 850,
-      programsOffered: 5,
-      equipmentSetsProvided: 324,
-      scholarshipsAwarded: 45,
-    }
-  };
+    totalValue: 2750000, // Current market value
+    yearEstablished: 2022,
+    annualReturn: 8.2, // Average annual return percentage
+    yearlyDistribution: 115000, // Annual distribution to programs
+    totalDistributed: 345000, // Total distributed since inception
 
-  const progressPercentage = (endowmentData.currentAmount / endowmentData.goalAmount) * 100;
-  const remainingAmount = endowmentData.goalAmount - endowmentData.currentAmount;
+    // Impact metrics
+    studentsServed: 2847,
+    programsFunded: 12,
+    scholarshipsAwarded: 145,
+
+    // Major donors
+    majorDonors: 47,
+    totalContributions: 2300000
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -62,234 +45,211 @@ export default function EndowmentProgress() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Endowment <span className="text-primary">Progress</span>
+
+      {/* Clean Header */}
+      <section className="bg-gradient-to-b from-primary/5 to-background py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            The Endowment Fund
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Track our journey to building a sustainable $5 million endowment that will provide free fencing programs for generations to come.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Building a sustainable foundation for free fencing education since {endowmentData.yearEstablished}
           </p>
         </div>
+      </section>
 
-        {/* Progress Overview */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {/* Main Progress Card */}
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-primary" />
-                Endowment Progress
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-foreground">
-                    {formatCompactCurrency(endowmentData.currentAmount)}
-                  </span>
-                  <span className="text-lg text-muted-foreground">
-                    of {formatCompactCurrency(endowmentData.goalAmount)} goal
-                  </span>
-                </div>
-                <Progress value={progressPercentage} className="h-3" />
-                <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>{progressPercentage.toFixed(1)}% complete</span>
-                  <span>{formatCompactCurrency(remainingAmount)} remaining</span>
-                </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        {/* Main Stats - Clean Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <DollarSign className="h-8 w-8 text-primary" />
               </div>
-              
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-emerald-600">
-                    {formatCompactCurrency(endowmentData.yearlyDistribution)}
-                  </div>
-                  <div className="text-sm text-muted-foreground">Annual Distribution</div>
-                  <div className="text-xs text-muted-foreground">5% of current endowment</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">
-                    {endowmentData.studentsSupported}
-                  </div>
-                  <div className="text-sm text-muted-foreground">Students Supported</div>
-                  <div className="text-xs text-muted-foreground">This year</div>
-                </div>
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {formatCompactCurrency(endowmentData.totalValue)}
               </div>
+              <div className="text-sm text-muted-foreground">Total Fund Value</div>
             </CardContent>
           </Card>
 
-          {/* Quick Stats */}
-          <div className="space-y-4">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <TrendingUp className="h-8 w-8 text-emerald-600" />
-                  <div>
-                    <div className="text-2xl font-bold text-foreground">15%</div>
-                    <div className="text-sm text-muted-foreground">Growth this year</div>
-                  </div>
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <TrendingUp className="h-8 w-8 text-emerald-600" />
+              </div>
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {endowmentData.annualReturn}%
+              </div>
+              <div className="text-sm text-muted-foreground">Average Annual Return</div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <Heart className="h-8 w-8 text-red-500" />
+              </div>
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {formatCompactCurrency(endowmentData.yearlyDistribution)}
+              </div>
+              <div className="text-sm text-muted-foreground">Annual Distribution</div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-md">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <Users className="h-8 w-8 text-purple-600" />
+              </div>
+              <div className="text-3xl font-bold text-foreground mb-1">
+                {endowmentData.studentsServed.toLocaleString()}
+              </div>
+              <div className="text-sm text-muted-foreground">Students Served</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* About the Endowment */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div>
+            <h2 className="text-3xl font-bold text-foreground mb-6">
+              How It Works
+            </h2>
+            <div className="space-y-4 text-muted-foreground">
+              <p>
+                Our endowment fund is professionally managed to generate sustainable returns while preserving capital for future generations.
+              </p>
+              <p>
+                Each year, we distribute 5% of the fund's value to support our free fencing programs, ensuring that financial barriers never prevent talented young people from discovering their potential.
+              </p>
+              <p>
+                Since {endowmentData.yearEstablished}, we've distributed {formatCompactCurrency(endowmentData.totalDistributed)} to fund programs, equipment, and scholarships, while growing the principal through careful investment and generous contributions.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-3xl font-bold text-foreground mb-6">
+              Our Impact
+            </h2>
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <GraduationCap className="h-8 w-8 text-primary" />
                 </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <Users className="h-8 w-8 text-blue-600" />
-                  <div>
-                    <div className="text-2xl font-bold text-foreground">324</div>
-                    <div className="text-sm text-muted-foreground">Donors this year</div>
-                  </div>
+                <div>
+                  <div className="text-2xl font-bold text-foreground">{endowmentData.studentsServed.toLocaleString()}</div>
+                  <div className="text-sm text-muted-foreground">Total students provided free fencing education</div>
                 </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <Calendar className="h-8 w-8 text-purple-600" />
-                  <div>
-                    <div className="text-2xl font-bold text-foreground">2027</div>
-                    <div className="text-sm text-muted-foreground">Target completion</div>
-                  </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-emerald-600/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Target className="h-8 w-8 text-emerald-600" />
                 </div>
-              </CardContent>
-            </Card>
+                <div>
+                  <div className="text-2xl font-bold text-foreground">{endowmentData.programsFunded}</div>
+                  <div className="text-sm text-muted-foreground">Programs created and sustained</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-purple-600/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="h-8 w-8 text-purple-600" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-foreground">{endowmentData.scholarshipsAwarded}</div>
+                  <div className="text-sm text-muted-foreground">Competition scholarships awarded</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Impact Metrics */}
-        <Card className="mb-12">
+        {/* Financial Overview */}
+        <Card className="mb-16">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Heart className="h-5 w-5 text-red-500" />
-              Current Impact
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              What our endowment funding accomplishes each year
-            </p>
+            <CardTitle className="text-2xl">Financial Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">
-                  {endowmentData.impactMetrics.studentsPerYear}
-                </div>
-                <div className="text-sm text-muted-foreground">Students Served Annually</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <div className="text-sm text-muted-foreground mb-1">Total Contributions</div>
+                <div className="text-2xl font-bold text-foreground">{formatCompactCurrency(endowmentData.totalContributions)}</div>
+                <div className="text-xs text-muted-foreground mt-1">From {endowmentData.majorDonors} major donors</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-emerald-600 mb-2">
-                  {formatCompactCurrency(endowmentData.impactMetrics.averageCostPerStudent)}
-                </div>
-                <div className="text-sm text-muted-foreground">Cost Per Student</div>
+              <div>
+                <div className="text-sm text-muted-foreground mb-1">Current Market Value</div>
+                <div className="text-2xl font-bold text-foreground">{formatCompactCurrency(endowmentData.totalValue)}</div>
+                <div className="text-xs text-emerald-600 mt-1">+{endowmentData.annualReturn}% annual return</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  {endowmentData.impactMetrics.programsOffered}
-                </div>
-                <div className="text-sm text-muted-foreground">Program Types</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2">
-                  {endowmentData.impactMetrics.equipmentSetsProvided}
-                </div>
-                <div className="text-sm text-muted-foreground">Equipment Sets Provided</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-orange-600 mb-2">
-                  {endowmentData.impactMetrics.scholarshipsAwarded}
-                </div>
-                <div className="text-sm text-muted-foreground">Competition Scholarships</div>
+              <div>
+                <div className="text-sm text-muted-foreground mb-1">Total Distributed</div>
+                <div className="text-2xl font-bold text-foreground">{formatCompactCurrency(endowmentData.totalDistributed)}</div>
+                <div className="text-xs text-muted-foreground mt-1">Since {endowmentData.yearEstablished}</div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Recent Donations */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-emerald-600" />
-                Recent Major Donations
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {endowmentData.recentDonations.map((donation, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                    <div>
-                      <div className="font-semibold text-foreground">{donation.donor}</div>
-                      <div className="text-sm text-muted-foreground">{donation.date}</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-emerald-600">{formatCurrency(donation.amount)}</div>
-                      <Badge variant="outline" className="text-xs">{donation.type}</Badge>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Milestones */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-primary" />
-                Endowment Milestones
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {endowmentData.milestones.map((milestone, index) => (
-                  <div key={index} className="flex items-center gap-4">
-                    <div className={`w-3 h-3 rounded-full ${
-                      milestone.achieved ? 'bg-emerald-500' : 'bg-muted-foreground/30'
-                    }`} />
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <span className={`font-semibold ${
-                          milestone.achieved ? 'text-foreground' : 'text-muted-foreground'
-                        }`}>
-                          {formatCompactCurrency(milestone.amount)}
-                        </span>
-                        <span className="text-sm text-muted-foreground">{milestone.date}</span>
-                      </div>
-                      <div className={`text-sm ${
-                        milestone.achieved ? 'text-muted-foreground' : 'text-muted-foreground/70'
-                      }`}>
-                        {milestone.description}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+        {/* Donor Recognition */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
+            Our Generous Supporters
+          </h2>
+          <Card className="border-0 shadow-md bg-gradient-to-r from-primary/5 to-emerald-600/5">
+            <CardContent className="p-8 text-center">
+              <div className="max-w-3xl mx-auto">
+                <p className="text-lg text-muted-foreground mb-6">
+                  We are deeply grateful to the {endowmentData.majorDonors} major donors who have contributed to building this endowment.
+                  Their vision and generosity ensure that fencing remains accessible to all students, regardless of their financial circumstances.
+                </p>
+                <div className="flex items-center justify-center gap-2 text-primary">
+                  <Heart className="h-5 w-5" />
+                  <span className="font-semibold">Thank you for believing in our mission</span>
+                  <Heart className="h-5 w-5" />
+                </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Call to Action */}
-        <Card className="mt-12 bg-gradient-to-r from-primary/10 to-emerald-600/10 border-primary/20">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-4">
-              Help Us Reach Our Goal
+        <Card className="border-2 border-primary/20 shadow-lg">
+          <CardContent className="p-12 text-center">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Join Us in Building the Future
             </h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Every donation to our endowment creates lasting impact. With {formatCompactCurrency(remainingAmount)} remaining, 
-              we're on track to secure free fencing programs for future generations.
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Your contribution to the endowment creates lasting impact. Every dollar invested today will support students for generations to come.
             </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-2xl mx-auto">
+              <div className="p-4 bg-muted rounded-lg">
+                <div className="font-bold text-lg text-foreground">$10,000</div>
+                <div className="text-sm text-muted-foreground">Funds 10 students annually forever</div>
+              </div>
+              <div className="p-4 bg-muted rounded-lg">
+                <div className="font-bold text-lg text-foreground">$50,000</div>
+                <div className="text-sm text-muted-foreground">Sustains a full program in perpetuity</div>
+              </div>
+              <div className="p-4 bg-muted rounded-lg">
+                <div className="font-bold text-lg text-foreground">$100,000+</div>
+                <div className="text-sm text-muted-foreground">Creates named scholarship fund</div>
+              </div>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700" asChild>
+              <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
                 <Link href="/donate">
-                  Contribute to Endowment
+                  Contribute to the Endowment
                   <ArrowUpRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/contact">Learn About Legacy Giving</Link>
+                <Link href="/contact">Learn More</Link>
               </Button>
             </div>
           </CardContent>

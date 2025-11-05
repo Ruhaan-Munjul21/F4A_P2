@@ -8,22 +8,25 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { 
-  Users, 
-  GraduationCap, 
-  Trophy, 
-  Calendar, 
-  Clock, 
+import { useMedia, getImagesByCategory, getMediaUrl } from "@/hooks/useMedia";
+import {
+  Users,
+  GraduationCap,
+  Trophy,
+  Calendar,
+  Clock,
   MapPin,
   Star,
   Shield,
-  Target
+  Target,
+  Upload
 } from "lucide-react";
 
 export default function Services() {
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { data: mediaFiles = [] } = useMedia();
 
   const registerMutation = useMutation({
     mutationFn: async (programData: any) => {
@@ -79,20 +82,60 @@ export default function Services() {
     });
   };
 
+  // Get images for each section
+  const programsHeroImages = getImagesByCategory(mediaFiles, 'programs-hero');
+  const youthClassImages = getImagesByCategory(mediaFiles, 'youth-classes');
+  const summerCampImages = getImagesByCategory(mediaFiles, 'summer-camps');
+  const competitionTeamImages = getImagesByCategory(mediaFiles, 'competition-team');
+
+  // Debug: Log what images we found
+  console.log('Media files loaded:', mediaFiles.length);
+  console.log('Programs hero images:', programsHeroImages);
+  console.log('Youth class images:', youthClassImages);
+  console.log('Summer camp images:', summerCampImages);
+  console.log('Competition team images:', competitionTeamImages);
+
+  const programsHeroUrl = programsHeroImages.length > 0
+    ? getMediaUrl(programsHeroImages[0].filePath)
+    : "https://images.unsplash.com/photo-1606924842584-ffa79285b531?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=600";
+
+  const youthClassImageUrl = youthClassImages.length > 0
+    ? getMediaUrl(youthClassImages[0].filePath)
+    : null;
+
+  const summerCampImageUrl = summerCampImages.length > 0
+    ? getMediaUrl(summerCampImages[0].filePath)
+    : null;
+
+  const competitionTeamImageUrl = competitionTeamImages.length > 0
+    ? getMediaUrl(competitionTeamImages[0].filePath)
+    : null;
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main>
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-r from-primary to-purple-600 text-primary-foreground">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Hero Section with Image */}
+        <section
+          className="relative py-20 text-white overflow-hidden"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${programsHeroUrl}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Our <span className="text-yellow-300">Free</span> Programs
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto">
               Comprehensive fencing programs designed for all skill levels and age groups, completely free of charge.
             </p>
+            <div className="mt-4 text-sm text-gray-300">
+              <p>Year-long Saturday Classes: 3:00 PM - 5:00 PM at Factory 220</p>
+              <p>Summer Camp (3 weeks): 3:00 PM - 6:00 PM</p>
+            </div>
           </div>
         </section>
 
@@ -101,7 +144,24 @@ export default function Services() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Youth Classes */}
-              <Card className="hover:shadow-xl transition-shadow">
+              <Card className="hover:shadow-xl transition-shadow overflow-hidden">
+                {youthClassImageUrl && (
+                  <div className="h-56 w-full overflow-hidden">
+                    <img
+                      src={youthClassImageUrl}
+                      alt="Youth Classes"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                )}
+                {!youthClassImageUrl && (
+                  <div className="h-56 bg-gray-200 flex items-center justify-center">
+                    <div className="text-center">
+                      <Upload className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm text-gray-500">Upload "youth-classes" image in admin</p>
+                    </div>
+                  </div>
+                )}
                 <CardContent className="p-8">
                   <div className="bg-primary text-primary-foreground w-16 h-16 rounded-xl flex items-center justify-center mb-6">
                     <Users className="h-8 w-8" />
@@ -113,7 +173,7 @@ export default function Services() {
                   <p className="text-muted-foreground mb-6">
                     Age-appropriate instruction focusing on fundamentals, safety, and fun while building confidence and discipline.
                   </p>
-                  
+
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center text-sm">
                       <Calendar className="h-4 w-4 mr-2 text-primary" />
@@ -121,7 +181,11 @@ export default function Services() {
                     </div>
                     <div className="flex items-center text-sm">
                       <Clock className="h-4 w-4 mr-2 text-primary" />
-                      <span>Weekends & After-school</span>
+                      <span>Saturdays 3-5 PM • Year-round</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <MapPin className="h-4 w-4 mr-2 text-primary" />
+                      <span>Factory 220, Passaic</span>
                     </div>
                     <div className="flex items-center text-sm">
                       <Shield className="h-4 w-4 mr-2 text-primary" />
@@ -134,15 +198,15 @@ export default function Services() {
                   </div>
 
                   <div className="space-y-3">
-                    <Button 
-                      className="w-full" 
+                    <Button
+                      className="w-full"
                       onClick={() => handleRegister("Youth Classes", "8-12")}
                       disabled={registerMutation.isPending}
                     >
                       Register Ages 8-12
                     </Button>
-                    <Button 
-                      className="w-full" 
+                    <Button
+                      className="w-full"
                       variant="outline"
                       onClick={() => handleRegister("Youth Classes", "13-17")}
                       disabled={registerMutation.isPending}
@@ -154,7 +218,24 @@ export default function Services() {
               </Card>
 
               {/* Summer Camps */}
-              <Card className="hover:shadow-xl transition-shadow">
+              <Card className="hover:shadow-xl transition-shadow overflow-hidden">
+                {summerCampImageUrl && (
+                  <div className="h-56 w-full overflow-hidden">
+                    <img
+                      src={summerCampImageUrl}
+                      alt="Summer Camps"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                )}
+                {!summerCampImageUrl && (
+                  <div className="h-56 bg-gray-200 flex items-center justify-center">
+                    <div className="text-center">
+                      <Upload className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm text-gray-500">Upload "summer-camps" image in admin</p>
+                    </div>
+                  </div>
+                )}
                 <CardContent className="p-8">
                   <div className="bg-emerald-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6">
                     <GraduationCap className="h-8 w-8" />
@@ -164,21 +245,25 @@ export default function Services() {
                     <Badge className="bg-emerald-600">FREE</Badge>
                   </div>
                   <p className="text-muted-foreground mb-6">
-                    Intensive week-long camps combining fencing instruction with character building and social activities.
+                    Intensive 3-week summer camps combining fencing instruction with character building and social activities.
                   </p>
-                  
+
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center text-sm">
                       <Calendar className="h-4 w-4 mr-2 text-emerald-600" />
-                      <span>June - August • 5-day programs</span>
+                      <span>3-week programs • Summer</span>
                     </div>
                     <div className="flex items-center text-sm">
                       <Clock className="h-4 w-4 mr-2 text-emerald-600" />
-                      <span>9 AM - 4 PM daily</span>
+                      <span>3:00 PM - 6:00 PM daily</span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <MapPin className="h-4 w-4 mr-2 text-emerald-600" />
+                      <span>Both locations</span>
                     </div>
                     <div className="flex items-center text-sm">
                       <Shield className="h-4 w-4 mr-2 text-emerald-600" />
-                      <span>Meals & snacks included</span>
+                      <span>Snacks included</span>
                     </div>
                     <div className="flex items-center text-sm">
                       <Star className="h-4 w-4 mr-2 text-emerald-600" />
@@ -186,7 +271,7 @@ export default function Services() {
                     </div>
                   </div>
 
-                  <Button 
+                  <Button
                     className="w-full bg-emerald-600 hover:bg-emerald-700"
                     onClick={() => handleRegister("Summer Camp", "All Ages")}
                     disabled={registerMutation.isPending}
@@ -197,7 +282,24 @@ export default function Services() {
               </Card>
 
               {/* Competition Training */}
-              <Card className="hover:shadow-xl transition-shadow">
+              <Card className="hover:shadow-xl transition-shadow overflow-hidden">
+                {competitionTeamImageUrl && (
+                  <div className="h-56 w-full overflow-hidden">
+                    <img
+                      src={competitionTeamImageUrl}
+                      alt="Competition Team"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                )}
+                {!competitionTeamImageUrl && (
+                  <div className="h-56 bg-gray-200 flex items-center justify-center">
+                    <div className="text-center">
+                      <Upload className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm text-gray-500">Upload "competition-team" image in admin</p>
+                    </div>
+                  </div>
+                )}
                 <CardContent className="p-8">
                   <div className="bg-purple-600 text-white w-16 h-16 rounded-xl flex items-center justify-center mb-6">
                     <Trophy className="h-8 w-8" />
@@ -209,7 +311,7 @@ export default function Services() {
                   <p className="text-muted-foreground mb-6">
                     Advanced training for students interested in competitive fencing, with tournament opportunities.
                   </p>
-                  
+
                   <div className="space-y-4 mb-8">
                     <div className="flex items-center text-sm">
                       <Target className="h-4 w-4 mr-2 text-purple-600" />
@@ -229,7 +331,7 @@ export default function Services() {
                     </div>
                   </div>
 
-                  <Button 
+                  <Button
                     className="w-full bg-purple-600 hover:bg-purple-700"
                     onClick={() => handleRegister("Competition Team", "Advanced")}
                     disabled={registerMutation.isPending}
@@ -242,38 +344,37 @@ export default function Services() {
           </div>
         </section>
 
-        {/* Schedule */}
+        {/* Schedule & Locations */}
         <section className="py-20 bg-muted">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Class Schedule
+                Class Schedule & Locations
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                All classes are held at our main training center with flexible scheduling options.
+                Year-round programs at two convenient locations in New Jersey
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
               <Card>
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold text-foreground mb-6">Weekday Classes</h3>
+                  <h3 className="text-2xl font-semibold text-foreground mb-6">Regular Classes</h3>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="font-medium">Monday - Friday</span>
-                      <span className="text-muted-foreground">4:00 PM - 8:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="font-medium">Ages 8-12</span>
-                      <span className="text-muted-foreground">4:00 PM - 5:30 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="font-medium">Ages 13-17</span>
-                      <span className="text-muted-foreground">6:00 PM - 8:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
-                      <span className="font-medium">Competition Team</span>
-                      <span className="text-muted-foreground">7:00 PM - 9:00 PM</span>
+                    <div className="py-3 border-b border-border">
+                      <p className="font-semibold text-lg mb-2">Year-Long Saturday Program</p>
+                      <div className="flex items-center text-muted-foreground">
+                        <Clock className="h-4 w-4 mr-2" />
+                        <span>Every Saturday, 3:00 PM - 5:00 PM</span>
+                      </div>
+                      <div className="flex items-center text-muted-foreground mt-1">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <span>Factory 220, Passaic</span>
+                      </div>
+                      <div className="flex items-center text-muted-foreground mt-1">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        <span>September - June</span>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -281,23 +382,22 @@ export default function Services() {
 
               <Card>
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold text-foreground mb-6">Weekend Classes</h3>
+                  <h3 className="text-2xl font-semibold text-foreground mb-6">Summer Programs</h3>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="font-medium">Saturday</span>
-                      <span className="text-muted-foreground">9:00 AM - 5:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="font-medium">Beginner Classes</span>
-                      <span className="text-muted-foreground">9:00 AM - 11:00 AM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                      <span className="font-medium">Intermediate Classes</span>
-                      <span className="text-muted-foreground">11:30 AM - 1:30 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
-                      <span className="font-medium">Open Practice</span>
-                      <span className="text-muted-foreground">2:00 PM - 5:00 PM</span>
+                    <div className="py-3 border-b border-border">
+                      <p className="font-semibold text-lg mb-2">3-Week Summer Camp</p>
+                      <div className="flex items-center text-muted-foreground">
+                        <Clock className="h-4 w-4 mr-2" />
+                        <span>Monday - Friday, 3:00 PM - 6:00 PM</span>
+                      </div>
+                      <div className="flex items-center text-muted-foreground mt-1">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <span>Both locations</span>
+                      </div>
+                      <div className="flex items-center text-muted-foreground mt-1">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        <span>June - August (3 sessions)</span>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -306,7 +406,7 @@ export default function Services() {
           </div>
         </section>
 
-        {/* Location */}
+        {/* Location with Maps */}
         <section className="py-20 bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -314,117 +414,111 @@ export default function Services() {
                 Training Locations
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                We operate multiple training centers to serve our community better.
+                Two convenient locations to serve the Passaic and Bergen County communities
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card>
-                <CardContent className="p-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Location 1 - Factory 220 */}
+              <Card className="overflow-hidden">
+                <div className="h-64">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.123456!2d-74.123456!3d40.859270!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s220+Passaic+St%2C+Passaic%2C+NJ+07055!5e0!3m2!1sen!2sus!4v1234567890"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Factory 220 Location"
+                  />
+                </div>
+                <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     <MapPin className="h-6 w-6 text-primary mr-3" />
-                    <h3 className="text-xl font-semibold text-foreground">Main Training Center</h3>
+                    <h3 className="text-xl font-semibold text-foreground">Factory 220 - Main Location</h3>
                   </div>
                   <div className="space-y-2 text-muted-foreground">
-                    <p>123 Community Center Drive</p>
-                    <p>Anytown, ST 12345</p>
-                    <p className="font-medium text-foreground mt-4">Facilities:</p>
+                    <p className="font-medium text-foreground">Address:</p>
+                    <p>220 Passaic St</p>
+                    <p>Passaic, NJ 07055</p>
+
+                    <p className="font-medium text-foreground mt-4">Programs at this location:</p>
                     <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>4 regulation fencing strips</li>
-                      <li>Complete equipment room</li>
-                      <li>Changing rooms & lockers</li>
-                      <li>Parent viewing area</li>
+                      <li>Year-long Saturday Classes (3-5 PM)</li>
+                      <li>Summer Camp Sessions</li>
+                      <li>Competition Team Training</li>
                     </ul>
+
+                    <div className="mt-4">
+                      <a
+                        href="https://www.google.com/maps/dir/?api=1&destination=220+Passaic+St,+Passaic,+NJ+07055"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline flex items-center"
+                      >
+                        Get Directions →
+                      </a>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardContent className="p-8">
+              {/* Location 2 - Garfield */}
+              <Card className="overflow-hidden">
+                <div className="h-64">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.654321!2d-74.109876!3d40.859270!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s60+Saddle+River+Ave%2C+Garfield%2C+NJ+07026!5e0!3m2!1sen!2sus!4v1234567890"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={true}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Garfield Location"
+                  />
+                </div>
+                <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     <MapPin className="h-6 w-6 text-primary mr-3" />
-                    <h3 className="text-xl font-semibold text-foreground">East Side Location</h3>
+                    <h3 className="text-xl font-semibold text-foreground">Garfield Location</h3>
                   </div>
                   <div className="space-y-2 text-muted-foreground">
-                    <p>456 School District Gym</p>
-                    <p>Easttown, ST 12346</p>
-                    <p className="font-medium text-foreground mt-4">Facilities:</p>
+                    <p className="font-medium text-foreground">Address:</p>
+                    <p>60 Saddle River Ave</p>
+                    <p>Garfield, NJ 07026</p>
+
+                    <p className="font-medium text-foreground mt-4">Programs at this location:</p>
                     <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>2 regulation fencing strips</li>
-                      <li>Equipment storage</li>
-                      <li>Gymnasium setting</li>
-                      <li>Weekend classes only</li>
+                      <li>Summer Camp Sessions</li>
+                      <li>Special workshops</li>
+                      <li>Equipment distribution</li>
                     </ul>
+
+                    <div className="mt-4">
+                      <a
+                        href="https://www.google.com/maps/dir/?api=1&destination=60+Saddle+River+Ave,+Garfield,+NJ+07026"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline flex items-center"
+                      >
+                        Get Directions →
+                      </a>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
+            </div>
+
+            {/* Additional info */}
+            <div className="mt-8 text-center">
+              <p className="text-muted-foreground">
+                Both locations offer free parking and are accessible by public transportation.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Requirements */}
-        <section className="py-20 bg-muted">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Getting Started
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Everything you need to know about joining our programs.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card>
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-semibold text-foreground mb-4">What We Provide</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-center">
-                      <Shield className="h-4 w-4 text-emerald-600 mr-2" />
-                      <span>All fencing equipment (mask, jacket, gloves, weapon)</span>
-                    </li>
-                    <li className="flex items-center">
-                      <Star className="h-4 w-4 text-emerald-600 mr-2" />
-                      <span>Professional instruction</span>
-                    </li>
-                    <li className="flex items-center">
-                      <Trophy className="h-4 w-4 text-emerald-600 mr-2" />
-                      <span>Competition opportunities</span>
-                    </li>
-                    <li className="flex items-center">
-                      <Users className="h-4 w-4 text-emerald-600 mr-2" />
-                      <span>Supportive community</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-semibold text-foreground mb-4">What You Need</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-center">
-                      <Target className="h-4 w-4 text-primary mr-2" />
-                      <span>Athletic shoes (no cleats)</span>
-                    </li>
-                    <li className="flex items-center">
-                      <Target className="h-4 w-4 text-primary mr-2" />
-                      <span>Comfortable athletic clothing</span>
-                    </li>
-                    <li className="flex items-center">
-                      <Target className="h-4 w-4 text-primary mr-2" />
-                      <span>Water bottle</span>
-                    </li>
-                    <li className="flex items-center">
-                      <Target className="h-4 w-4 text-primary mr-2" />
-                      <span>Positive attitude and willingness to learn</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
       </main>
 
       <Footer />

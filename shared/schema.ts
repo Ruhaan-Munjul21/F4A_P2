@@ -118,6 +118,72 @@ export const equipmentRequests = pgTable("equipment_requests", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Media files for admin uploads
+export const mediaFiles = pgTable("media_files", {
+  id: serial("id").primaryKey(),
+  filename: varchar("filename", { length: 255 }).notNull(),
+  originalName: varchar("original_name", { length: 255 }).notNull(),
+  mimeType: varchar("mime_type", { length: 100 }).notNull(),
+  fileSize: integer("file_size").notNull(),
+  filePath: varchar("file_path", { length: 500 }).notNull(),
+  uploadedBy: varchar("uploaded_by", { length: 255 }),
+  altText: varchar("alt_text", { length: 255 }),
+  category: varchar("category", { length: 100 }).default("general"),
+  isPublic: boolean("is_public").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Team members for about page
+export const teamMembers = pgTable("team_members", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  imageUrl: varchar("image_url", { length: 500 }),
+  category: varchar("category", { length: 100 }).default("leadership"), // leadership, advisors, team
+  ordering: integer("ordering").default(0),
+  isActive: boolean("is_active").default(true),
+  linkedinUrl: varchar("linkedin_url", { length: 500 }),
+  email: varchar("email", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Page content for CMS functionality
+export const pageContent = pgTable("page_content", {
+  id: serial("id").primaryKey(),
+  pageId: varchar("page_id", { length: 100 }).notNull(),
+  sectionId: varchar("section_id", { length: 100 }).notNull(),
+  contentType: varchar("content_type", { length: 50 }).notNull(), // text, image, video, json
+  content: text("content"),
+  imageUrl: varchar("image_url", { length: 500 }),
+  videoUrl: varchar("video_url", { length: 500 }),
+  metadata: jsonb("metadata"), // Additional data like alt text, captions, etc.
+  ordering: integer("ordering").default(0),
+  isPublished: boolean("is_published").default(true),
+  updatedBy: varchar("updated_by", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => ({
+  pageSection: index("page_section_idx").on(table.pageId, table.sectionId),
+}));
+
+// Scholarship athletes
+export const scholarshipAthletes = pgTable("scholarship_athletes", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  age: integer("age"),
+  school: varchar("school", { length: 255 }),
+  bio: text("bio"),
+  achievements: text("achievements"), // JSON stringified array
+  scholarshipYear: varchar("scholarship_year", { length: 20 }),
+  imageUrl: varchar("image_url", { length: 500 }),
+  ordering: integer("ordering").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Create insert schemas
 export const insertMarketplaceItemSchema = createInsertSchema(marketplaceItems).omit({
   id: true,
@@ -161,7 +227,33 @@ export const insertEquipmentRequestSchema = createInsertSchema(equipmentRequests
   status: true,
 });
 
+export const insertMediaFileSchema = createInsertSchema(mediaFiles).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPageContentSchema = createInsertSchema(pageContent).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertScholarshipAthleteSchema = createInsertSchema(scholarshipAthletes).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Type exports
+export type MediaFile = typeof mediaFiles.$inferSelect;
+export type PageContent = typeof pageContent.$inferSelect;
+export type TeamMember = typeof teamMembers.$inferSelect;
 export type MarketplaceItem = typeof marketplaceItems.$inferSelect;
 export type ClassRegistration = typeof classRegistrations.$inferSelect;
 export type GearDropoff = typeof gearDropoffs.$inferSelect;
@@ -169,6 +261,7 @@ export type GearPickup = typeof gearPickups.$inferSelect;
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type Donation = typeof donations.$inferSelect;
 export type EquipmentRequest = typeof equipmentRequests.$inferSelect;
+export type ScholarshipAthlete = typeof scholarshipAthletes.$inferSelect;
 
 export type InsertMarketplaceItem = z.infer<typeof insertMarketplaceItemSchema>;
 export type InsertClassRegistration = z.infer<typeof insertClassRegistrationSchema>;
@@ -177,5 +270,9 @@ export type InsertGearPickup = z.infer<typeof insertGearPickupSchema>;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
 export type InsertDonation = z.infer<typeof insertDonationSchema>;
 export type InsertEquipmentRequest = z.infer<typeof insertEquipmentRequestSchema>;
+export type InsertMediaFile = z.infer<typeof insertMediaFileSchema>;
+export type InsertPageContent = z.infer<typeof insertPageContentSchema>;
+export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
+export type InsertScholarshipAthlete = z.infer<typeof insertScholarshipAthleteSchema>;
 
 

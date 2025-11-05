@@ -2,140 +2,154 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
+import { Menu, Swords } from "lucide-react";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Hide navigation on admin and editor pages
+  if (location.startsWith('/admin') || location.includes('/editor')) {
+    return null;
+  }
 
   const navigationItems = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/services", label: "Services" },
-    { href: "/marketplace", label: "Marketplace" },
+    { href: "/services", label: "Programs" },
+    { href: "/scholarship-endowment", label: "Scholarships" },
     { href: "/gallery", label: "Gallery" },
-    { href: "/donate", label: "Donate" },
     { href: "/contact", label: "Contact" },
   ];
 
-  const registrationItems = [
-    { href: "/register", label: "Class Registration" },
-    { href: "/gear-dropoff", label: "Donate Gear" },
-    { href: "/gear-pickup", label: "Request Equipment" },
-    { href: "/endowment", label: "Endowment Progress" },
-  ];
-
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-      isScrolled ? "nav-sticky shadow-md" : "bg-white"
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-primary hover:text-primary/80 transition-colors">
-                Fencing for Everyone
-              </h1>
-            </Link>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-3 py-2 text-sm font-medium transition-colors hover:text-primary ${
-                    location === item.href
-                      ? "text-primary border-b-2 border-primary"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              
-              {/* Registration Dropdown */}
-              <div className="relative group">
-                <button className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                  Get Involved
-                </button>
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-md border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <div className="py-2">
-                    {registrationItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
+    <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="bg-white/10 backdrop-blur-md rounded-xl shadow-lg px-6 py-4 border border-white/20">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center space-x-3">
+                <div className="p-2 bg-white/10 rounded-lg">
+                  <Swords className="h-6 w-6 text-white drop-shadow-md" />
                 </div>
+                <span className="text-2xl font-bold text-white drop-shadow-md">
+                  Fencing<span className="text-yellow-300">ForEveryone</span>
+                </span>
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center">
+              {/* Center Links */}
+              <div className="flex items-center space-x-2 mr-8">
+                {navigationItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
+                      location === item.href
+                        ? "text-gray-900 bg-white/80"
+                        : "text-white drop-shadow-md hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex items-center space-x-2">
+                <Button
+                  className="bg-yellow-400/90 hover:bg-yellow-400 text-gray-900 px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm"
+                  asChild
+                >
+                  <Link href="/register">Get Started</Link>
+                </Button>
+
+                <Button
+                  className="bg-white/80 hover:bg-white/90 text-gray-900 px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm"
+                  asChild
+                >
+                  <Link href="/donate">Support Us</Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="text-white drop-shadow-md hover:text-white hover:bg-white/10 px-3 py-2 h-auto rounded-lg font-medium text-sm"
+                  asChild
+                >
+                  <Link href="/admin">Admin Portal</Link>
+                </Button>
               </div>
             </div>
-          </div>
-          
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <div className="flex flex-col space-y-4 mt-8">
-                  <div className="text-lg font-semibold text-foreground mb-4">
-                    Navigation
-                  </div>
-                  
-                  {navigationItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={`text-left px-3 py-2 text-base font-medium transition-colors hover:text-primary ${
-                        location === item.href
-                          ? "text-primary"
-                          : "text-muted-foreground"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                  
-                  <div className="border-t pt-4 mt-4">
-                    <div className="text-sm font-semibold text-foreground mb-3">
-                      Get Involved
+
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="hover:bg-white/10 rounded-lg p-2">
+                    <Menu className="h-5 w-5 text-white drop-shadow-md" />
+                    <span className="sr-only">Open menu</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-80 bg-gradient-to-b from-blue-600 to-emerald-600">
+                  <div className="flex flex-col space-y-2 mt-6">
+                    {/* Mobile Logo */}
+                    <div className="flex items-center space-x-2 mb-6 pb-3 border-b border-white/20">
+                      <div className="p-2 bg-white/20 rounded-lg">
+                        <Swords className="h-5 w-5 text-white" />
+                      </div>
+                      <span className="text-xl font-bold text-white">
+                        Fencing<span className="text-yellow-300">ForEveryone</span>
+                      </span>
                     </div>
-                    {registrationItems.map((item) => (
+
+                    {navigationItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setIsOpen(false)}
-                        className="block px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                        className={`px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 ${
+                          location === item.href
+                            ? "text-blue-900 bg-white/90"
+                            : "text-white/90 hover:text-white hover:bg-white/20"
+                        }`}
                       >
                         {item.label}
                       </Link>
                     ))}
+
+                    <div className="pt-4 mt-4 border-t border-white/20 space-y-3">
+                      <Button
+                        className="w-full bg-yellow-400 hover:bg-yellow-300 text-blue-900 rounded-lg font-bold py-3 text-base shadow"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Link href="/register">Get Started</Link>
+                      </Button>
+
+                      <Button
+                        className="w-full bg-white hover:bg-gray-100 text-blue-700 rounded-lg font-bold py-3 text-base shadow"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Link href="/donate">Donate</Link>
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        className="w-full border-white/50 text-white hover:bg-white/20 rounded-lg font-medium py-3 text-base"
+                        asChild
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Link href="/admin">Admin Portal</Link>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>

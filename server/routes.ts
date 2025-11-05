@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { registerAdminRoutes } from "./admin-routes";
 import {
   insertMarketplaceItemSchema,
   insertClassRegistrationSchema,
@@ -13,30 +14,84 @@ import {
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Marketplace routes
-  app.get('/api/marketplace/items', async (req, res) => {
+
+  // Public media endpoint for frontend
+  app.get('/api/media', async (req, res) => {
     try {
-      const items = await storage.getMarketplaceItems();
-      res.json(items);
+      const { category, type } = req.query;
+      const mediaFiles = await storage.getMediaFiles({
+        category: category as string,
+        type: type as string
+      });
+      res.json(mediaFiles);
     } catch (error) {
-      console.error("Error fetching marketplace items:", error);
-      res.status(500).json({ message: "Failed to fetch marketplace items" });
+      console.error("Error fetching media files:", error);
+      res.status(500).json({ message: "Failed to fetch media files" });
     }
   });
 
-  app.post('/api/marketplace/items', async (req, res) => {
+  // Public team members endpoint
+  app.get('/api/team-members', async (req, res) => {
     try {
-      const validatedData = insertMarketplaceItemSchema.parse(req.body);
-      const newItem = await storage.createMarketplaceItem(validatedData);
-      res.status(201).json(newItem);
+      const members = await storage.getTeamMembers();
+      // Convert snake_case to camelCase for response
+      const response = members.map((member: any) => ({
+        id: member.id,
+        name: member.name,
+        title: member.title,
+        description: member.description,
+        imageUrl: member.image_url || member.imageUrl,
+        category: member.category,
+        ordering: member.ordering,
+        isActive: member.is_active !== undefined ? member.is_active : member.isActive,
+        linkedinUrl: member.linkedin_url || member.linkedinUrl,
+        email: member.email,
+        createdAt: member.created_at || member.createdAt,
+        updatedAt: member.updated_at || member.updatedAt,
+        metadata: member.metadata
+      }));
+      res.json(response);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid data", errors: error.errors });
-      }
-      console.error("Error creating marketplace item:", error);
-      res.status(500).json({ message: "Failed to create marketplace item" });
+      console.error("Error fetching team members:", error);
+      res.status(500).json({ message: "Failed to fetch team members" });
     }
   });
+
+  // Public scholarship athletes endpoint
+  app.get('/api/scholarship-athletes', async (req, res) => {
+    try {
+      const athletes = await storage.getScholarshipAthletes();
+      res.json(athletes);
+    } catch (error) {
+      console.error("Error fetching scholarship athletes:", error);
+      res.status(500).json({ message: "Failed to fetch scholarship athletes" });
+    }
+  });
+
+  // Marketplace routes - DISABLED
+  // app.get('/api/marketplace/items', async (req, res) => {
+  //   try {
+  //     const items = await storage.getMarketplaceItems();
+  //     res.json(items);
+  //   } catch (error) {
+  //     console.error("Error fetching marketplace items:", error);
+  //     res.status(500).json({ message: "Failed to fetch marketplace items" });
+  //   }
+  // });
+
+  // app.post('/api/marketplace/items', async (req, res) => {
+  //   try {
+  //     const validatedData = insertMarketplaceItemSchema.parse(req.body);
+  //     const newItem = await storage.createMarketplaceItem(validatedData);
+  //     res.status(201).json(newItem);
+  //   } catch (error) {
+  //     if (error instanceof z.ZodError) {
+  //       return res.status(400).json({ message: "Invalid data", errors: error.errors });
+  //     }
+  //     console.error("Error creating marketplace item:", error);
+  //     res.status(500).json({ message: "Failed to create marketplace item" });
+  //   }
+  // });
 
   // Class registration routes
   app.post('/api/class-registrations', async (req, res) => {
@@ -127,6 +182,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to create equipment request" });
     }
   });
+
+  // Register admin routes
+  registerAdminRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;

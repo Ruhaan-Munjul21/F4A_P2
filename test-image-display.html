@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Image Display from API</h1>
+    <button onclick="fetchImages()">Fetch Images</button>
+    <button onclick="testDirectUrl()">Test Direct Firebase URL</button>
+    
+    <div id="status"></div>
+    <div id="imageGrid" class="image-grid"></div>
+
+    <script>
+        async function fetchImages() {
+            const statusDiv = document.getElementById('status');
+            const gridDiv = document.getElementById('imageGrid');
+            
+            statusDiv.innerHTML = '<div class="success">Fetching images from API...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/media');
+                const data = await response.json();
+                
+                statusDiv.innerHTML = `<div class="success">Found ${data.length} images</div>`;
+                
+                gridDiv.innerHTML = '';
+                
+                data.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'image-card';
+                    card.innerHTML = `
+                        <h3>Image ${index + 1}: ${item.originalName}</h3>
+                        <p>Category: ${item.category}</p>
+                        <p>URL: <code style="word-break: break-all; font-size: 10px;">${item.filePath}</code></p>
+                        <img src="${item.filePath}" 
+                             alt="${item.altText || item.originalName}"
+                             onerror="this.parentElement.innerHTML += '<div class=error>Failed to load image</div>'"
+                             onload="this.parentElement.innerHTML += '<div class=success>Image loaded successfully</div>'">
+                    `;
+                    gridDiv.appendChild(card);
+                });
+                
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        function testDirectUrl() {
+            const gridDiv = document.getElementById('imageGrid');
+            const testUrl = 'https://firebasestorage.googleapis.com/v0/b/fencing-for-everyone.firebasestorage.app/o/images%2Ftest-cb7af5de-43c1-4046-9ef8-bbb49fe9c504.png?alt=media';
+            
+            gridDiv.innerHTML = `
+                <div class="image-card">
+                    <h3>Direct Firebase URL Test</h3>
+                    <p>Testing direct Firebase URL access</p>
+                    <img src="${testUrl}" 
+                         alt="Test image"
+                         onerror="this.parentElement.innerHTML += '<div class=error>Failed to load image from Firebase</div>'"
+                         onload="this.parentElement.innerHTML += '<div class=success>Firebase image loaded successfully!</div>'">
+                </div>
+            `;
+        }
+        
+        // Auto-fetch on load
+        window.onload = fetchImages;
+    </script>
+</body>
+</html>

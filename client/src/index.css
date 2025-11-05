@@ -1,6 +1,10 @@
+@import "react-image-crop/dist/ReactCrop.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global styles - no padding needed as nav overlays content */
 
 :root {
   --background: hsl(0, 0%, 100%);

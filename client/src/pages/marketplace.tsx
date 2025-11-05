@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import { MarketplaceItem } from "@shared/schema";
+import { useMedia, getImagesByCategory, getMediaUrl } from "@/hooks/useMedia";
 import { Search, Plus } from "lucide-react";
 
 export default function Marketplace() {
@@ -28,6 +29,9 @@ export default function Marketplace() {
       return response.json();
     },
   });
+
+  const { data: mediaFiles = [] } = useMedia();
+  const equipmentImages = getImagesByCategory(mediaFiles, 'equipment');
 
   const handleSearch = () => {
     // Search is automatically triggered by the query key change
@@ -119,6 +123,30 @@ export default function Marketplace() {
             <span className="font-medium">{items.length}</span> items available
           </div>
         </div>
+
+        {/* Equipment Showcase */}
+        {equipmentImages.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-foreground">Equipment Gallery</h2>
+              <Button variant="outline" size="sm" onClick={() => window.location.href = '/gallery'}>
+                View All Photos
+              </Button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {equipmentImages.slice(0, 4).map((image) => (
+                <div key={image.id} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+                  <img
+                    src={getMediaUrl(image.filePath, image.filename)}
+                    alt={image.altText || image.originalName}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Marketplace Grid */}
         {isLoading ? (
