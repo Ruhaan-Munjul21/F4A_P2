@@ -79,7 +79,7 @@ export default function Contact() {
       
       <main>
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-r from-primary to-purple-600 text-primary-foreground">
+        <section className="py-20 pt-32 bg-gradient-to-r from-primary to-purple-600 text-primary-foreground">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Get in <span className="text-yellow-300">Touch</span>

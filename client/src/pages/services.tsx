@@ -118,7 +118,7 @@ export default function Services() {
       <main>
         {/* Hero Section with Image */}
         <section
-          className="relative py-20 text-white overflow-hidden"
+          className="relative py-20 pt-32 text-white overflow-hidden"
           style={{
             backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${programsHeroUrl}')`,
             backgroundSize: 'cover',

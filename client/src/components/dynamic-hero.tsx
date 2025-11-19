@@ -28,7 +28,7 @@ export default function DynamicHero({
     : fallbackImage;
 
   return (
-    <section className="relative hero-overlay text-primary-foreground">
+    <section className="relative hero-overlay text-primary-foreground pt-24">
       <div className="absolute inset-0 bg-black/20"></div>
       <div
         className="relative bg-cover bg-center h-96"

@@ -109,7 +109,7 @@ export default function Landing() {
       <StatsSection />
 
       {/* Intro Video Section */}
-      <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-14 pb-10 bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -153,7 +153,7 @@ export default function Landing() {
                   )}
                 </>
               ) : mediaLoading ? (
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                   <div className="text-center">
                     <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mb-4 mx-auto animate-pulse">
                       <Play className="w-8 h-8 text-primary ml-1" />
@@ -164,7 +164,7 @@ export default function Landing() {
                   </div>
                 </div>
               ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                   <div className="text-center">
                     <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mb-4 mx-auto hover:bg-white transition-colors cursor-pointer">
                       <Play className="w-8 h-8 text-primary ml-1" />
@@ -186,7 +186,7 @@ export default function Landing() {
       </section>
 
       {/* About/Mission Section */}
-      <section className="py-20 bg-muted">
+      <section className="py-10 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -218,7 +218,7 @@ export default function Landing() {
                 alt="Students learning fencing fundamentals"
                 className="rounded-xl shadow-lg w-full h-auto"
               />
-              <div className="absolute -bottom-4 -right-4 bg-emerald-600 text-white p-4 rounded-lg shadow-lg">
+              <div className="absolute -bottom-4 -right-4 bg-accent text-accent-foreground p-4 rounded-lg shadow-lg">
                 <div className="text-2xl font-bold">{getMissionValue('badgeText', '100%')}</div>
                 <div className="text-sm">{getMissionValue('badgeSubtext', 'Classes are FREE')}</div>
               </div>
@@ -228,7 +228,7 @@ export default function Landing() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-background">
+      <section className="py-10 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -263,7 +263,7 @@ export default function Landing() {
 
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
-                <div className="bg-emerald-600 text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <div className="bg-accent text-accent-foreground w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                   <GraduationCap className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-3">Summer Camps</h3>
@@ -276,7 +276,7 @@ export default function Landing() {
                   <li>• Skills competitions</li>
                   <li>• Take-home starter kit</li>
                 </ul>
-                <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
+                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
                   Apply for Camp - FREE
                 </Button>
               </CardContent>
@@ -284,7 +284,7 @@ export default function Landing() {
 
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
-                <div className="bg-purple-600 text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <div className="bg-secondary text-secondary-foreground w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                   <Trophy className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-3">Competition Training</h3>
@@ -297,7 +297,7 @@ export default function Landing() {
                   <li>• Mental preparation</li>
                   <li>• Scholarship opportunities</li>
                 </ul>
-                <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
                   Join Team - FREE
                 </Button>
               </CardContent>
@@ -307,7 +307,7 @@ export default function Landing() {
       </section>
 
       {/* Photo Gallery Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted">
+      <section className="py-10 bg-gradient-to-b from-background to-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

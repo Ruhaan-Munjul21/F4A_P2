@@ -25,16 +25,16 @@ export default function Navigation() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
       <div className="max-w-[1400px] mx-auto">
-        <div className="bg-white/10 backdrop-blur-md rounded-xl shadow-lg px-6 py-4 border border-white/20">
+        <div className="backdrop-blur-dark rounded-xl shadow-lg px-6 py-4 border border-border">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-3">
-                <div className="p-2 bg-white/10 rounded-lg">
-                  <Swords className="h-6 w-6 text-white drop-shadow-md" />
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <Swords className="h-6 w-6 text-primary drop-shadow-md" />
                 </div>
-                <span className="text-2xl font-bold text-white drop-shadow-md">
-                  Fencing<span className="text-yellow-300">ForEveryone</span>
+                <span className="text-2xl font-bold text-foreground drop-shadow-md">
+                  Fencing <span className="text-primary">For Everyone</span>
                 </span>
               </Link>
             </div>
@@ -49,8 +49,8 @@ export default function Navigation() {
                     href={item.href}
                     className={`px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg ${
                       location === item.href
-                        ? "text-gray-900 bg-white/80"
-                        : "text-white drop-shadow-md hover:text-white hover:bg-white/10"
+                        ? "text-background bg-primary"
+                        : "text-foreground drop-shadow-md hover:text-primary hover:bg-primary/10"
                     }`}
                   >
                     {item.label}
@@ -61,14 +61,14 @@ export default function Navigation() {
               {/* CTA Buttons */}
               <div className="flex items-center space-x-2">
                 <Button
-                  className="bg-yellow-400/90 hover:bg-yellow-400 text-gray-900 px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm glow-primary"
                   asChild
                 >
                   <Link href="/register">Get Started</Link>
                 </Button>
 
                 <Button
-                  className="bg-white/80 hover:bg-white/90 text-gray-900 px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm"
+                  className="bg-card hover:bg-card/90 text-card-foreground border border-border px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm"
                   asChild
                 >
                   <Link href="/donate">Support Us</Link>
@@ -76,7 +76,7 @@ export default function Navigation() {
 
                 <Button
                   variant="ghost"
-                  className="text-white drop-shadow-md hover:text-white hover:bg-white/10 px-3 py-2 h-auto rounded-lg font-medium text-sm"
+                  className="text-foreground drop-shadow-md hover:text-primary hover:bg-primary/10 px-3 py-2 h-auto rounded-lg font-medium text-sm"
                   asChild
                 >
                   <Link href="/admin">Admin Portal</Link>
@@ -88,20 +88,20 @@ export default function Navigation() {
             <div className="lg:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="hover:bg-white/10 rounded-lg p-2">
-                    <Menu className="h-5 w-5 text-white drop-shadow-md" />
+                  <Button variant="ghost" size="icon" className="hover:bg-primary/10 rounded-lg p-2">
+                    <Menu className="h-5 w-5 text-foreground drop-shadow-md" />
                     <span className="sr-only">Open menu</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-80 bg-gradient-to-b from-blue-600 to-emerald-600">
+                <SheetContent side="right" className="w-80 bg-background border-border gradient-card">
                   <div className="flex flex-col space-y-2 mt-6">
                     {/* Mobile Logo */}
-                    <div className="flex items-center space-x-2 mb-6 pb-3 border-b border-white/20">
-                      <div className="p-2 bg-white/20 rounded-lg">
-                        <Swords className="h-5 w-5 text-white" />
+                    <div className="flex items-center space-x-2 mb-6 pb-3 border-b border-border">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Swords className="h-5 w-5 text-primary" />
                       </div>
-                      <span className="text-xl font-bold text-white">
-                        Fencing<span className="text-yellow-300">ForEveryone</span>
+                      <span className="text-xl font-bold text-foreground">
+                        Fencing <span className="text-primary">For Everyone</span>
                       </span>
                     </div>
 
@@ -112,17 +112,17 @@ export default function Navigation() {
                         onClick={() => setIsOpen(false)}
                         className={`px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 ${
                           location === item.href
-                            ? "text-blue-900 bg-white/90"
-                            : "text-white/90 hover:text-white hover:bg-white/20"
+                            ? "text-background bg-primary"
+                            : "text-foreground hover:text-primary hover:bg-primary/10"
                         }`}
                       >
                         {item.label}
                       </Link>
                     ))}
 
-                    <div className="pt-4 mt-4 border-t border-white/20 space-y-3">
+                    <div className="pt-4 mt-4 border-t border-border space-y-3">
                       <Button
-                        className="w-full bg-yellow-400 hover:bg-yellow-300 text-blue-900 rounded-lg font-bold py-3 text-base shadow"
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-bold py-3 text-base shadow glow-primary"
                         asChild
                         onClick={() => setIsOpen(false)}
                       >
@@ -130,7 +130,7 @@ export default function Navigation() {
                       </Button>
 
                       <Button
-                        className="w-full bg-white hover:bg-gray-100 text-blue-700 rounded-lg font-bold py-3 text-base shadow"
+                        className="w-full bg-card hover:bg-card/90 text-card-foreground border border-border rounded-lg font-bold py-3 text-base shadow"
                         asChild
                         onClick={() => setIsOpen(false)}
                       >
@@ -139,7 +139,7 @@ export default function Navigation() {
 
                       <Button
                         variant="outline"
-                        className="w-full border-white/50 text-white hover:bg-white/20 rounded-lg font-medium py-3 text-base"
+                        className="w-full border-border text-foreground hover:bg-primary/10 hover:text-primary rounded-lg font-medium py-3 text-base"
                         asChild
                         onClick={() => setIsOpen(false)}
                       >

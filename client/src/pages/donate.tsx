@@ -11,7 +11,7 @@ export default function Donate() {
 
       <main>
         {/* Hero Section */}
-        <section className="py-16 bg-gradient-to-r from-emerald-50 to-green-50">
+        <section className="py-16 pt-32 bg-gradient-to-r from-emerald-50 to-green-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-emerald-800">
               Help Us Bring Fencing to Everyone
