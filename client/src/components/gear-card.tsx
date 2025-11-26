@@ -79,12 +79,12 @@ export default function GearCard({ item }: GearCardProps) {
       case "fair":
         return "bg-orange-500";
       default:
-        return "bg-gray-500";
+        return "bg-muted-foreground";
     }
   };
 
   return (
-    <Card className="marketplace-card bg-white hover:shadow-md transition-all duration-300">
+    <Card className="marketplace-card bg-card hover:shadow-md transition-all duration-300">
       <div className="aspect-video bg-muted-foreground/10 rounded-t-lg overflow-hidden">
         {item.imageUrl ? (
           <img

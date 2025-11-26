@@ -10,7 +10,6 @@ import Services from "@/pages/services";
 import Donate from "@/pages/donate";
 import Contact from "@/pages/contact";
 import Gallery from "@/pages/gallery";
-import ClassRegistration from "@/pages/class-registration";
 import GearDropoff from "@/pages/gear-dropoff";
 import GearPickup from "@/pages/gear-pickup";
 import EndowmentProgress from "@/pages/endowment-progress";
@@ -37,7 +36,6 @@ function Router() {
       <Route path="/test-hero" component={TestHero} />
       <Route path="/test-video" component={TestVideo} />
       <Route path="/video-test" component={VideoTest} />
-      <Route path="/register" component={ClassRegistration} />
       <Route path="/gear-dropoff" component={GearDropoff} />
       <Route path="/gear-pickup" component={GearPickup} />
       <Route path="/endowment" component={EndowmentProgress} />

@@ -365,8 +365,8 @@ export default function MediaUpload({
       {/* Drop Zone */}
       <div
         className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-          isDragging ? "border-primary bg-primary/5" : "border-gray-300"
-        } ${selectedFile ? "bg-gray-50" : ""}`}
+          isDragging ? "border-primary bg-primary/10" : "border-border"
+        } ${selectedFile ? "bg-muted/30" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}

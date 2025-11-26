@@ -61,14 +61,14 @@ export default function HeroWithMedia({
                   Support Our Mission
                 </Button>
               </Link>
-              <Link href="/register">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
                 <Button
                   variant="outline"
                   className="border-border backdrop-blur-sm text-foreground hover:bg-card hover:border-primary rounded-full px-8 h-14 text-lg font-medium bg-card/50 transition-all"
                 >
                   Register for Free Classes
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
           <div className="relative h-[500px] rounded-3xl overflow-hidden hover-lift">

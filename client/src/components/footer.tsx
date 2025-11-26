@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Heart, Mail, Phone, MapPin } from "lucide-react";
+import { Heart, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -47,9 +47,9 @@ export default function Footer() {
           <div>
             <h4 className="text-md font-semibold mb-4 text-foreground">Get Involved</h4>
             <div className="space-y-2">
-              <Link href="/register" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-primary transition-colors">
                 Register for Classes
-              </Link>
+              </a>
               <Link href="/gear-dropoff" className="block text-muted-foreground hover:text-primary transition-colors">
                 Donate Equipment
               </Link>
@@ -68,14 +68,10 @@ export default function Footer() {
 
         {/* Contact Info */}
         <div className="border-t border-border mt-8 pt-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
             <div className="flex items-center space-x-2">
               <Mail className="h-4 w-4" />
               <span>info@fencingforeveryone.org</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Phone className="h-4 w-4" />
-              <span>(555) 123-FENCE</span>
             </div>
             <div className="flex items-center space-x-2">
               <MapPin className="h-4 w-4" />
@@ -87,6 +83,9 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
           <p>© {currentYear} Fencing for Everyone. All rights reserved. Building inclusive communities through sport.</p>
+          <Link href="/admin" className="inline-block mt-2 text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors">
+            Admin
+          </Link>
         </div>
       </div>
     </footer>

@@ -45,7 +45,7 @@ export default function MediaGallery({
       <Dialog>
         <DialogTrigger asChild>
           <Card className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-            <div className="relative aspect-video bg-gray-100">
+            <div className="relative aspect-video bg-muted">
               {file.mimeType.startsWith('image/') ? (
                 imageError ? (
                   <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">

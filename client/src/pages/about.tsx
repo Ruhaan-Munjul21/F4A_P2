@@ -612,11 +612,11 @@ export default function About() {
             Join our community and discover the sport that teaches discipline, respect, and strategic thinking.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/register">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="secondary">
                 Register for Free Classes
               </Button>
-            </Link>
+            </a>
             <Link href="/gear-pickup">
               <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">
                 Request Equipment

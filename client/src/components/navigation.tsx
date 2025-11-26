@@ -64,7 +64,7 @@ export default function Navigation() {
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 h-auto rounded-lg font-semibold text-sm shadow backdrop-blur-sm glow-primary"
                   asChild
                 >
-                  <Link href="/register">Get Started</Link>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Get Started</a>
                 </Button>
 
                 <Button
@@ -72,14 +72,6 @@ export default function Navigation() {
                   asChild
                 >
                   <Link href="/donate">Support Us</Link>
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  className="text-foreground drop-shadow-md hover:text-primary hover:bg-primary/10 px-3 py-2 h-auto rounded-lg font-medium text-sm"
-                  asChild
-                >
-                  <Link href="/admin">Admin Portal</Link>
                 </Button>
               </div>
             </div>
@@ -126,7 +118,7 @@ export default function Navigation() {
                         asChild
                         onClick={() => setIsOpen(false)}
                       >
-                        <Link href="/register">Get Started</Link>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Get Started</a>
                       </Button>
 
                       <Button
@@ -135,15 +127,6 @@ export default function Navigation() {
                         onClick={() => setIsOpen(false)}
                       >
                         <Link href="/donate">Donate</Link>
-                      </Button>
-
-                      <Button
-                        variant="outline"
-                        className="w-full border-border text-foreground hover:bg-primary/10 hover:text-primary rounded-lg font-medium py-3 text-base"
-                        asChild
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <Link href="/admin">Admin Portal</Link>
                       </Button>
                     </div>
                   </div>

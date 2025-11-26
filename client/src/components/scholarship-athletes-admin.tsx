@@ -361,7 +361,7 @@ export default function ScholarshipAthletesAdmin() {
                           </span>
                         )}
                         {!athlete.isActive && (
-                          <span className="text-sm px-2 py-1 bg-gray-400 text-white rounded">
+                          <span className="text-sm px-2 py-1 bg-muted text-muted-foreground rounded">
                             Inactive
                           </span>
                         )}
