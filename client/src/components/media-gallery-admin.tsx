@@ -89,7 +89,7 @@ export default function MediaGalleryAdmin({
 
   const MediaItem = ({ file, isActive }: { file: MediaFile; isActive?: boolean }) => (
     <Card className={`overflow-hidden ${isActive ? 'ring-2 ring-primary' : ''}`}>
-      <div className="relative aspect-video bg-gray-100">
+      <div className="relative aspect-video bg-muted">
         {file.mimeType.startsWith('image/') ? (
           <img
             src={getMediaUrl(file.filePath, file.filename)}

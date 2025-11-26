@@ -185,20 +185,34 @@ export default function MediaUpload({
 
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
-    const crop = centerCrop(
-      makeAspectCrop(
-        {
-          unit: '%',
-          width: 90,
-        },
-        16 / 9,
+    // For 'why-we-started', don't force aspect ratio
+    if (category === 'why-we-started') {
+      // Just center a selection without forcing aspect ratio
+      const crop: CropType = {
+        unit: '%',
+        x: 5,
+        y: 5,
+        width: 90,
+        height: 90
+      };
+      setCrop(crop);
+    } else {
+      // For other categories, use 16:9 aspect ratio
+      const crop = centerCrop(
+        makeAspectCrop(
+          {
+            unit: '%',
+            width: 90,
+          },
+          16 / 9,
+          width,
+          height
+        ),
         width,
         height
-      ),
-      width,
-      height
-    );
-    setCrop(crop);
+      );
+      setCrop(crop);
+    }
   };
 
   const getCroppedImg = async (): Promise<void> => {
@@ -313,9 +327,9 @@ export default function MediaUpload({
                 <ReactCrop
                   crop={crop}
                   onChange={(c) => setCrop(c)}
-                  aspect={16 / 9}
+                  aspect={category === 'why-we-started' ? undefined : 16 / 9}
                   minWidth={100}
-                  minHeight={56}
+                  minHeight={category === 'why-we-started' ? 100 : 56}
                 >
                   <img
                     ref={imgRef}
@@ -329,7 +343,9 @@ export default function MediaUpload({
 
               <div className="flex justify-between items-center">
                 <div className="text-xs text-muted-foreground">
-                  Aspect ratio: 16:9 (recommended for hero images)
+                  {category === 'why-we-started'
+                    ? 'Free crop - adjust to your preference'
+                    : 'Aspect ratio: 16:9 (recommended for hero images)'}
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" onClick={handleCancelCrop}>
@@ -349,8 +365,8 @@ export default function MediaUpload({
       {/* Drop Zone */}
       <div
         className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-          isDragging ? "border-primary bg-primary/5" : "border-gray-300"
-        } ${selectedFile ? "bg-gray-50" : ""}`}
+          isDragging ? "border-primary bg-primary/10" : "border-border"
+        } ${selectedFile ? "bg-muted/30" : ""}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}

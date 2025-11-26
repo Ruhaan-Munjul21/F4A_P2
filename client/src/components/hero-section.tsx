@@ -17,9 +17,9 @@ export default function HeroSection() {
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Making Fencing Accessible to{" "}
-              <span className="text-yellow-300">Everyone</span>
+              <span className="text-primary">Everyone</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            <p className="text-xl md:text-2xl mb-8 text-foreground/90">
               Free fencing classes, equipment donations, and community support for
               underprivileged students. Join our mission to break down barriers in
               sport.
@@ -27,7 +27,7 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 btn-hover-lift"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 btn-hover-lift glow-primary"
                 asChild
               >
                 <Link href="/services">
@@ -38,7 +38,7 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 btn-hover-lift"
+                className="border-2 border-foreground/20 text-foreground hover:bg-foreground/10 hover:text-primary btn-hover-lift"
                 asChild
               >
                 <Link href="/marketplace">

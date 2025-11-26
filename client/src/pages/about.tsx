@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Trophy, Users, Target, Heart, Quote, Award, Shield, Star, MapPin, Mail, Phone, Clock, ChevronLeft, ChevronRight, X, Upload } from "lucide-react";
+import { Trophy, Users, Heart, Quote, Award, Mail, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -139,8 +139,6 @@ export default function About() {
     ? getMediaUrl(heroImages[0].filePath)
     : "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=600";
 
-  // Get goals images
-  const goalsImages = getImagesByCategory(mediaFiles, 'goals');
 
   // Get Why We Started image
   const whyWeStartedImages = getImagesByCategory(mediaFiles, 'why-we-started');
@@ -217,7 +215,7 @@ export default function About() {
       <Navigation />
 
       {/* Hero Section - Reduced height */}
-      <section className="relative min-h-[35vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[35vh] flex items-center justify-center overflow-hidden pt-24">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -255,7 +253,7 @@ export default function About() {
                   className="flex transition-transform duration-500 ease-in-out"
                   style={{ transform: `translateX(-${(currentCoachIndex / 3) * 100}%)` }}
                 >
-                  {coaches.map((coach: any, index: number) => (
+                  {coaches.map((coach: any) => (
                     <div key={coach.id} className="w-1/3 flex-shrink-0 px-3">
                       <Card
                         className="overflow-hidden h-full cursor-pointer transition-all hover:shadow-xl hover:scale-105"
@@ -311,14 +309,14 @@ export default function About() {
                 <>
                   <button
                     onClick={goToPreviousCoach}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 transition-all hover:scale-110"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 text-black shadow-lg rounded-full p-3 transition-all hover:scale-110"
                     aria-label="Previous coach"
                   >
                     <ChevronLeft className="h-6 w-6" />
                   </button>
                   <button
                     onClick={goToNextCoach}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 transition-all hover:scale-110"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 text-black shadow-lg rounded-full p-3 transition-all hover:scale-110"
                     aria-label="Next coach"
                   >
                     <ChevronRight className="h-6 w-6" />
@@ -364,56 +362,56 @@ export default function About() {
       </section>
 
       {/* Goals & Impact - CLEAN DESIGN */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gradient-to-b from-background via-card/30 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Impact Stats - Clean centered design like reference */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Students Served */}
-            <div className="text-center">
+            <div className="text-center group hover:scale-105 transition-all duration-300">
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center">
-                  <Users className="h-10 w-10 text-blue-600" />
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Users className="h-10 w-10 text-primary" />
                 </div>
               </div>
-              <div className="text-5xl font-bold text-gray-900 mb-2">{goalsData.studentsServed}</div>
-              <p className="text-base font-medium text-gray-700">Students</p>
-              <p className="text-base text-gray-500">Served</p>
+              <div className="text-5xl font-bold text-primary mb-2 group-hover:drop-shadow-[0_0_10px_rgba(250,204,20,0.3)]">{goalsData.studentsServed}</div>
+              <p className="text-base font-medium text-foreground">Students</p>
+              <p className="text-base text-muted-foreground">Served</p>
             </div>
 
             {/* Students on Scholarship */}
-            <div className="text-center">
+            <div className="text-center group hover:scale-105 transition-all duration-300">
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center">
-                  <Heart className="h-10 w-10 text-green-600" />
+                <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                  <Heart className="h-10 w-10 text-accent" />
                 </div>
               </div>
-              <div className="text-5xl font-bold text-gray-900 mb-2">{goalsData.scholarships}</div>
-              <p className="text-base font-medium text-gray-700">Students on</p>
-              <p className="text-base text-gray-500">Scholarship</p>
+              <div className="text-5xl font-bold text-accent mb-2 group-hover:drop-shadow-[0_0_10px_rgba(250,204,20,0.3)]">{goalsData.scholarships}</div>
+              <p className="text-base font-medium text-foreground">Students on</p>
+              <p className="text-base text-muted-foreground">Scholarship</p>
             </div>
 
             {/* Funds Raised */}
-            <div className="text-center">
+            <div className="text-center group hover:scale-105 transition-all duration-300">
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 bg-purple-50 rounded-full flex items-center justify-center">
-                  <Award className="h-10 w-10 text-purple-600" />
+                <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+                  <Award className="h-10 w-10 text-secondary" />
                 </div>
               </div>
-              <div className="text-5xl font-bold text-gray-900 mb-2">{goalsData.fundsRaised}</div>
-              <p className="text-base font-medium text-gray-700">Funds</p>
-              <p className="text-base text-gray-500">Raised</p>
+              <div className="text-5xl font-bold text-secondary mb-2 group-hover:drop-shadow-[0_0_10px_rgba(250,204,20,0.3)]">{goalsData.fundsRaised}</div>
+              <p className="text-base font-medium text-foreground">Funds</p>
+              <p className="text-base text-muted-foreground">Raised</p>
             </div>
 
             {/* Equipment Value */}
-            <div className="text-center">
+            <div className="text-center group hover:scale-105 transition-all duration-300">
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center">
-                  <Trophy className="h-10 w-10 text-orange-600" />
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Trophy className="h-10 w-10 text-primary" />
                 </div>
               </div>
-              <div className="text-5xl font-bold text-gray-900 mb-2">{goalsData.equipmentValue}</div>
-              <p className="text-base font-medium text-gray-700">Subscribers</p>
-              <p className="text-base text-gray-500"></p>
+              <div className="text-5xl font-bold text-primary mb-2 group-hover:drop-shadow-[0_0_10px_rgba(250,204,20,0.3)]">{goalsData.equipmentValue}</div>
+              <p className="text-base font-medium text-foreground">Subscribers</p>
+              <p className="text-base text-muted-foreground"></p>
             </div>
           </div>
         </div>
@@ -421,7 +419,7 @@ export default function About() {
 
 
       {/* Club Partners - EDITABLE WITH IMAGES */}
-      <section className="py-12 bg-background">
+      <section className="py-12 bg-muted">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-foreground mb-3">Our Partners</h2>
@@ -505,10 +503,10 @@ export default function About() {
       </section>
 
       {/* Why We Started - FOURTH */}
-      <section className="py-12 bg-muted">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div>
+      <section className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+            <div className="lg:col-span-2">
               <h2 className="text-3xl font-bold text-foreground mb-5">
                 Why We Started
               </h2>
@@ -531,15 +529,15 @@ export default function About() {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative lg:col-span-3">
               {whyWeStartedImageUrl ? (
                 <img
                   src={whyWeStartedImageUrl}
                   alt="Why we started Fencing for Everyone"
-                  className="w-full h-[500px] object-cover rounded-lg shadow-xl"
+                  className="w-full h-auto object-contain rounded-lg shadow-xl"
                 />
               ) : (
-                <div className="w-full h-[500px] bg-gray-200 rounded-lg shadow-xl flex items-center justify-center">
+                <div className="w-full min-h-[600px] bg-gray-200 rounded-lg shadow-xl flex items-center justify-center">
                   <div className="text-center">
                     <Upload className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                     <p className="text-gray-500 mb-2">No image uploaded yet</p>
@@ -557,7 +555,7 @@ export default function About() {
       </section>
 
       {/* Testimonials - WITH REAL CONTENT */}
-      <section className="py-12 bg-background">
+      <section className="py-12 bg-muted">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-foreground mb-3">What People Say</h2>
@@ -614,11 +612,11 @@ export default function About() {
             Join our community and discover the sport that teaches discipline, respect, and strategic thinking.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/register">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="secondary">
                 Register for Free Classes
               </Button>
-            </Link>
+            </a>
             <Link href="/gear-pickup">
               <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-primary">
                 Request Equipment

@@ -69,8 +69,8 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Use port 3000 for local development (5000 is reserved on macOS)
-  const port = process.env.PORT || 3000;
+  // Use port 3002 for local development (5000 is reserved on macOS)
+  const port = process.env.PORT || 3002;
   server.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
   });

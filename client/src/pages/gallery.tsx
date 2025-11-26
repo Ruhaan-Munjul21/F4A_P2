@@ -11,9 +11,10 @@ export default function Gallery() {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <DynamicHero 
+      <DynamicHero
         title="Photo & Video Gallery"
         subtitle="Explore the vibrant community and transformative experiences at Fencing for Everyone through our media collection."
+        variant="dark"
       />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

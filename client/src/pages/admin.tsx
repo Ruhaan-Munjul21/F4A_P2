@@ -339,8 +339,8 @@ export default function AdminPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-            <p className="text-gray-600 mt-2">Manage your site content and media</p>
+            <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+            <p className="text-muted-foreground mt-2">Manage your site content and media</p>
           </div>
           <div className="flex gap-2">
             <Link href="/admin/editor">
@@ -359,13 +359,13 @@ export default function AdminPage() {
         </div>
 
       {/* New Page Editor Notice */}
-      <Alert className="mb-6 border-purple-200 bg-purple-50">
-        <AlertDescription>
+      <Alert className="mb-6 border-primary/30 bg-primary/10">
+        <AlertDescription className="text-foreground">
           <strong>🎉 New Feature: Page-by-Page Editor!</strong>
-          <p className="mt-2 text-sm">
-            Click the <strong>"Page Editor"</strong> button above to access the new visual editor where you can:
+          <p className="mt-2 text-sm text-muted-foreground">
+            Click the <strong className="text-foreground">"Page Editor"</strong> button above to access the new visual editor where you can:
           </p>
-          <ul className="mt-2 ml-4 text-sm space-y-1">
+          <ul className="mt-2 ml-4 text-sm space-y-1 text-muted-foreground">
             <li>• Edit content for every page of your site</li>
             <li>• Change images and videos in each section</li>
             <li>• Update text, stats, and call-to-action buttons</li>
@@ -444,7 +444,7 @@ export default function AdminPage() {
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{file.originalName}</p>
-                        <p className="text-xs text-gray-500">{formatFileSize(file.fileSize)}</p>
+                        <p className="text-xs text-muted-foreground">{formatFileSize(file.fileSize)}</p>
                       </div>
                       <Badge variant="secondary">{file.category}</Badge>
                     </div>
@@ -464,7 +464,7 @@ export default function AdminPage() {
                       <Package className="h-4 w-4" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{item.title}</p>
-                        <p className="text-xs text-gray-500">{item.category}</p>
+                        <p className="text-xs text-muted-foreground">{item.category}</p>
                       </div>
                       <Badge variant={item.isAvailable ? "default" : "secondary"}>
                         {item.isAvailable ? "Available" : "Unavailable"}
@@ -497,16 +497,16 @@ export default function AdminPage() {
 
         <TabsContent value="upload" className="space-y-6" onPaste={handlePaste}>
           {/* Quick Guide */}
-          <Alert className="border-blue-200 bg-blue-50">
-            <AlertDescription className="text-sm">
-              <strong>Quick Tips:</strong>
+          <Alert className="border-secondary/30 bg-secondary/10">
+            <AlertDescription className="text-sm text-muted-foreground">
+              <strong className="text-foreground">Quick Tips:</strong>
               <ul className="mt-2 space-y-1 ml-4">
-                <li>• <strong>Paste images:</strong> Copy an image and press Ctrl/Cmd+V anywhere on this page</li>
-                <li>• <strong>Drag & Drop:</strong> Drag files directly into the upload area below</li>
+                <li>• <strong className="text-foreground">Paste images:</strong> Copy an image and press Ctrl/Cmd+V anywhere on this page</li>
+                <li>• <strong className="text-foreground">Drag & Drop:</strong> Drag files directly into the upload area below</li>
                 <li>• For homepage hero section: Select "Hero Section (Homepage)" category</li>
-                <li>• <strong className="text-yellow-600">Recommended image size: 1920x1080 pixels or larger for best quality</strong></li>
-                <li>• <strong className="text-yellow-600">For hero images: Use high-resolution images (2MB+) to avoid blurriness</strong></li>
-                <li>• <strong>Supported formats:</strong>
+                <li>• <strong className="text-primary">Recommended image size: 1920x1080 pixels or larger for best quality</strong></li>
+                <li>• <strong className="text-primary">For hero images: Use high-resolution images (2MB+) to avoid blurriness</strong></li>
+                <li>• <strong className="text-foreground">Supported formats:</strong>
                   <ul className="ml-4 mt-1">
                     <li>Images: JPG, PNG, WebP, GIF</li>
                     <li>Videos: MP4, WebM, MOV, AVI</li>
@@ -529,9 +529,9 @@ export default function AdminPage() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
-                  isDragging 
-                    ? 'border-primary bg-primary/5 scale-102' 
-                    : 'border-gray-300 hover:border-gray-400'
+                  isDragging
+                    ? 'border-primary bg-primary/10 scale-102'
+                    : 'border-border hover:border-muted-foreground'
                 } ${selectedFile ? 'bg-muted/30' : ''}`}
               >
                 {imagePreview ? (
@@ -721,7 +721,7 @@ export default function AdminPage() {
               <CardDescription>Manage site content and settings</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-muted-foreground">
                 Content management features coming soon...
               </div>
             </CardContent>

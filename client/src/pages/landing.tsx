@@ -109,7 +109,7 @@ export default function Landing() {
       <StatsSection />
 
       {/* Intro Video Section */}
-      <section className="py-20 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-14 pb-10 bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -120,73 +120,88 @@ export default function Landing() {
             </p>
           </div>
           
-          <div className="max-w-4xl mx-auto">
-            <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-muted group">
-              {!mediaLoading && allHeroVideos.length > 0 ? (
-                <>
-                  <video
-                    key={allHeroVideos[0].id}
-                    src={getMediaUrl(allHeroVideos[0].filePath)}
-                    poster={posterUrl}
-                    controls
-                    muted={false}
-                    controlsList="nodownload"
-                    preload="metadata"
-                    className="w-full h-full object-cover"
-                    onPlay={() => setVideoPlaying(true)}
-                    onPause={() => setVideoPlaying(false)}
-                    onEnded={() => setVideoPlaying(false)}
-                    onError={(e) => {
-                      console.error('Video failed to load:', allHeroVideos[0].filePath);
-                      console.error('Error event:', e);
-                    }}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                  {/* Play button overlay - only show when video is not playing */}
-                  {!videoPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="bg-white/90 rounded-full p-6 shadow-2xl transform transition-transform group-hover:scale-110">
-                        <Play className="w-12 h-12 text-primary ml-1" fill="currentColor" />
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* YouTube Video - Left */}
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-muted">
+                <iframe
+                  src="https://www.youtube.com/embed/D0eXMkMHInQ?rel=0"
+                  className="absolute inset-0 w-full h-full"
+                  frameBorder="0"
+                  allowFullScreen
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin"
+                />
+              </div>
+
+              {/* Uploaded Video - Right */}
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-muted group">
+                {!mediaLoading && allHeroVideos.length > 0 ? (
+                  <>
+                    <video
+                      key={allHeroVideos[0].id}
+                      src={getMediaUrl(allHeroVideos[0].filePath)}
+                      poster={posterUrl}
+                      controls
+                      muted={false}
+                      controlsList="nodownload"
+                      preload="metadata"
+                      className="w-full h-full object-cover"
+                      onPlay={() => setVideoPlaying(true)}
+                      onPause={() => setVideoPlaying(false)}
+                      onEnded={() => setVideoPlaying(false)}
+                      onError={(e) => {
+                        console.error('Video failed to load:', allHeroVideos[0].filePath);
+                        console.error('Error event:', e);
+                      }}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                    {/* Play button overlay - only show when video is not playing */}
+                    {!videoPlaying && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="bg-white/90 rounded-full p-6 shadow-2xl transform transition-transform group-hover:scale-110">
+                          <Play className="w-12 h-12 text-primary ml-1" fill="currentColor" />
+                        </div>
                       </div>
+                    )}
+                  </>
+                ) : mediaLoading ? (
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mb-4 mx-auto animate-pulse">
+                        <Play className="w-8 h-8 text-primary ml-1" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                        Loading video...
+                      </h3>
                     </div>
-                  )}
-                </>
-              ) : mediaLoading ? (
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mb-4 mx-auto animate-pulse">
-                      <Play className="w-8 h-8 text-primary ml-1" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">
-                      Loading video...
-                    </h3>
                   </div>
-                </div>
-              ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mb-4 mx-auto hover:bg-white transition-colors cursor-pointer">
-                      <Play className="w-8 h-8 text-primary ml-1" />
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mb-4 mx-auto hover:bg-white transition-colors cursor-pointer">
+                        <Play className="w-8 h-8 text-primary ml-1" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                        Our Story: Making Fencing Accessible
+                      </h3>
+                      <p className="text-muted-foreground">
+                        Upload a video with category "hero" or "intro-video" in the admin panel to feature here.
+                        <br />
+                        <span className="text-xs opacity-75">Tip: Upload an image with category "video-poster" for a custom cover image</span>
+                      </p>
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">
-                      Our Story: Making Fencing Accessible
-                    </h3>
-                    <p className="text-muted-foreground">
-                      Upload a video with category "hero" or "intro-video" in the admin panel to feature here.
-                      <br />
-                      <span className="text-xs opacity-75">Tip: Upload an image with category "video-poster" for a custom cover image</span>
-                    </p>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* About/Mission Section */}
-      <section className="py-20 bg-muted">
+      <section className="py-10 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -218,7 +233,7 @@ export default function Landing() {
                 alt="Students learning fencing fundamentals"
                 className="rounded-xl shadow-lg w-full h-auto"
               />
-              <div className="absolute -bottom-4 -right-4 bg-emerald-600 text-white p-4 rounded-lg shadow-lg">
+              <div className="absolute -bottom-4 -right-4 bg-accent text-accent-foreground p-4 rounded-lg shadow-lg">
                 <div className="text-2xl font-bold">{getMissionValue('badgeText', '100%')}</div>
                 <div className="text-sm">{getMissionValue('badgeSubtext', 'Classes are FREE')}</div>
               </div>
@@ -228,7 +243,7 @@ export default function Landing() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-background">
+      <section className="py-10 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -255,15 +270,17 @@ export default function Landing() {
                   <li>• Certified instructors</li>
                   <li>• Weekend and after-school options</li>
                 </ul>
-                <Button className="w-full">
-                  Register Now - FREE
+                <Button className="w-full" asChild>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
+                    Register Now - FREE
+                  </a>
                 </Button>
               </CardContent>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
-                <div className="bg-emerald-600 text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <div className="bg-accent text-accent-foreground w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                   <GraduationCap className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-3">Summer Camps</h3>
@@ -276,15 +293,17 @@ export default function Landing() {
                   <li>• Skills competitions</li>
                   <li>• Take-home starter kit</li>
                 </ul>
-                <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
-                  Apply for Camp - FREE
+                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" asChild>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
+                    Apply for Camp - FREE
+                  </a>
                 </Button>
               </CardContent>
             </Card>
 
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="p-8">
-                <div className="bg-purple-600 text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <div className="bg-secondary text-secondary-foreground w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                   <Trophy className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-3">Competition Training</h3>
@@ -297,8 +316,10 @@ export default function Landing() {
                   <li>• Mental preparation</li>
                   <li>• Scholarship opportunities</li>
                 </ul>
-                <Button className="w-full bg-purple-600 hover:bg-purple-700">
-                  Join Team - FREE
+                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" asChild>
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
+                    Join Team - FREE
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -307,7 +328,7 @@ export default function Landing() {
       </section>
 
       {/* Photo Gallery Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted">
+      <section className="py-10 bg-gradient-to-b from-background to-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

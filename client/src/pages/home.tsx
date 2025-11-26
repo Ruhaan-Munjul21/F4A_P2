@@ -48,7 +48,7 @@ export default function Home() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Package className="h-8 w-8 text-emerald-600" />
+                <Package className="h-8 w-8 text-accent" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Equipment Requests</p>
                   <p className="text-2xl font-bold text-foreground">{requests.length}</p>
@@ -60,7 +60,7 @@ export default function Home() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Trophy className="h-8 w-8 text-yellow-500" />
+                <Trophy className="h-8 w-8 text-primary" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Skill Level</p>
                   <p className="text-2xl font-bold text-foreground">Beginner</p>
@@ -72,7 +72,7 @@ export default function Home() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-purple-600" />
+                <Users className="h-8 w-8 text-secondary" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-muted-foreground">Community Points</p>
                   <p className="text-2xl font-bold text-foreground">245</p>

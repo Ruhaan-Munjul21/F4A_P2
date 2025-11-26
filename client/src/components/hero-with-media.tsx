@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { GraduationCap, Heart } from "lucide-react";
 import { useMedia, getImagesByCategory, getMediaUrl } from "@/hooks/useMedia";
 
 interface HeroWithMediaProps {
@@ -8,11 +7,11 @@ interface HeroWithMediaProps {
   subtitle?: string;
 }
 
-export default function HeroWithMedia({ 
+export default function HeroWithMedia({
   title = "Making Fencing Accessible to Everyone",
   subtitle = "Free fencing classes, equipment donations, and community support for underprivileged students. Join our mission to break down barriers in sport."
 }: HeroWithMediaProps) {
-  const { data: mediaFiles = [], isLoading } = useMedia();
+  const { data: mediaFiles = [] } = useMedia();
   
   // Only use images for hero background - no videos
   const heroImages = getImagesByCategory(mediaFiles, 'home-hero');
@@ -39,77 +38,49 @@ export default function HeroWithMedia({
   }
 
   return (
-    <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden mt-0">
-      {/* Background Image Only - No Videos */}
-      <div className="absolute inset-0">
-        {/* Background div with image */}
-        <img
-          src={imageUrl}
-          alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{
-            objectPosition: 'center',
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
-      </div>
+    <section className="pt-32 pb-20 px-6 lg:px-12 relative">
+      {/* Hero gradient background */}
+      <div className="absolute inset-0 gradient-hero pointer-events-none" />
 
-      {/* Content */}
-      <div className="relative z-10 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Making Fencing Accessible to{" "}
-              <span className="text-yellow-400">Everyone</span>
+      <div className="container mx-auto relative">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <h1 className="text-6xl lg:text-7xl font-bold leading-tight">
+              Making Fencing
+              <br />
+              Accessible to{" "}
+              <span className="italic gradient-text pr-4">Everyone</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100 mb-8 leading-relaxed">
-              {subtitle}
+            <p className="text-xl text-foreground/70 leading-relaxed max-w-xl">
+              Empowering youth through the sport of fencing with free classes, expert coaching, and competitive
+              opportunities.
             </p>
-            
-            {/* Call to Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <Button
-                size="lg"
-                className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 text-lg px-8"
-                asChild
-              >
-                <Link href="/register">
-                  <GraduationCap className="w-5 h-5 mr-2" />
-                  Register for Free Classes
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-gray-900 text-lg px-8"
-                asChild
-              >
-                <Link href="/donate">
-                  <Heart className="w-5 h-5 mr-2" />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/donate">
+                <Button className="gradient-primary text-primary-foreground hover:opacity-90 rounded-full px-8 h-14 text-lg font-medium shadow-lg glow-primary transition-all">
                   Support Our Mission
-                </Link>
-              </Button>
+                </Button>
+              </Link>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZ-oGxJJO5GgRmGTMy81JMIjLyrHYqyaarkfX4S9vyCyeZvg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  className="border-border backdrop-blur-sm text-foreground hover:bg-card hover:border-primary rounded-full px-8 h-14 text-lg font-medium bg-card/50 transition-all"
+                >
+                  Register for Free Classes
+                </Button>
+              </a>
             </div>
+          </div>
+          <div className="relative h-[500px] rounded-3xl overflow-hidden hover-lift">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 z-10" />
+            <img
+              src={hasImage ? getMediaUrl(heroImages[0].filePath) : imageUrl}
+              alt="Young fencer in action"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>
-
-      {/* Admin Upload Hint */}
-      {!isLoading && (
-        <>
-          {!hasImage && (
-            <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-2 rounded backdrop-blur-sm">
-              Upload hero images in Admin Panel
-            </div>
-          )}
-          {hasImage && heroImages[0].fileSize < 500000 && (
-            <div className="absolute bottom-4 right-4 bg-yellow-600/90 text-white text-xs px-3 py-2 rounded backdrop-blur-sm">
-              ⚠️ Low resolution image detected ({Math.round(heroImages[0].fileSize / 1024)}KB)
-              <br />Upload a higher resolution image (2MB+) for better quality
-            </div>
-          )}
-        </>
-      )}
     </section>
   );
 }

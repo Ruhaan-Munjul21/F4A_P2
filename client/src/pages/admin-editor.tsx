@@ -690,7 +690,6 @@ function TeamMemberManager({ category, sectionName }: { category: string; sectio
 function WhyWeStartedEditor() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [uploadingImage, setUploadingImage] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [whyWeStartedData, setWhyWeStartedData] = useState({
     paragraph1: 'Fencing has traditionally been an exclusive sport - expensive equipment, costly lessons, and limited access. We saw talented kids being turned away simply because they couldn\'t afford $500 for basic gear or $150/month for coaching.',
@@ -724,41 +723,7 @@ function WhyWeStartedEditor() {
     }
   }, [mediaFiles]);
 
-  // Handle image upload
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploadingImage(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('category', 'why-we-started');
-    formData.append('altText', 'Why we started Fencing for Everyone');
-
-    try {
-      const response = await fetch('/api/admin/media/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error('Failed to upload image');
-
-      const data = await response.json();
-      setImageUrl(data.url);
-
-      toast({ title: 'Success', description: 'Image uploaded successfully' });
-      queryClient.invalidateQueries({ queryKey: ['admin-media'] });
-      queryClient.invalidateQueries({ queryKey: ['media-files'] });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to upload image',
-        variant: 'destructive'
-      });
-    } finally {
-      setUploadingImage(false);
-    }
-  };
+  // handleImageUpload function removed - using MediaUpload component instead
 
   // Save content mutation
   const saveMutation = useMutation({
@@ -825,39 +790,23 @@ function WhyWeStartedEditor() {
                     </Button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                    <Upload className="h-12 w-12 mx-auto text-gray-400 mb-3" />
-                    <p className="text-sm text-gray-600 mb-2">Click to upload image</p>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      disabled={uploadingImage}
-                      className="hidden"
-                      id="why-we-started-image"
-                    />
-                    <label
-                      htmlFor="why-we-started-image"
-                      className="cursor-pointer inline-block"
-                    >
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        disabled={uploadingImage}
-                        asChild
-                      >
-                        <span>
-                          {uploadingImage ? 'Uploading...' : 'Choose File'}
-                        </span>
-                      </Button>
-                    </label>
-                  </div>
+                  <MediaUpload
+                    category="why-we-started"
+                    onUploadSuccess={(data) => {
+                      setImageUrl(data.url);
+                      toast({ title: 'Success', description: 'Image uploaded successfully' });
+                      queryClient.invalidateQueries({ queryKey: ['admin-media'] });
+                      queryClient.invalidateQueries({ queryKey: ['media-files'] });
+                    }}
+                    accept="image/*"
+                    maxSize={10}
+                  />
                 )}
               </div>
               <div className="text-sm text-muted-foreground">
                 <p className="mb-2">• Recommended size: 800x600px or larger</p>
                 <p className="mb-2">• Supported formats: JPG, PNG, WebP</p>
+                <p className="mb-2">• Free aspect ratio - no forced cropping</p>
                 <p>• This image will appear on the right side of the "Why We Started" section</p>
               </div>
             </div>

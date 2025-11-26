@@ -9,9 +9,9 @@ interface StatData {
 
 const statsData: StatData[] = [
   { value: 50, label: "Students Helped", color: "text-primary", suffix: "+" },
-  { value: 63, label: "Sets of Gear Collected", color: "text-emerald-600", suffix: "+" },
-  { value: 2, label: "Scholarship Athletes", color: "text-purple-600" },
-  { value: 2000, label: "Raised", color: "text-yellow-500", suffix: "$+" },
+  { value: 63, label: "Sets of Gear Collected", color: "text-accent", suffix: "+" },
+  { value: 2, label: "Scholarship Athletes", color: "text-secondary", suffix: "" },
+  { value: 2000, label: "Raised", color: "text-primary", suffix: "$+" },
 ];
 
 export default function StatsSection() {
@@ -59,9 +59,9 @@ export default function StatsSection() {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-b from-white to-muted/30">
+    <section ref={sectionRef} className="py-10 bg-gradient-to-b from-background via-card/30 to-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Our Impact in <span className="text-primary">Numbers</span>
           </h2>
@@ -71,9 +71,9 @@ export default function StatsSection() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {statsData.map((stat, index) => (
-            <div key={index} className="text-center group hover:scale-105 transition-transform duration-300">
+            <div key={index} className="text-center group hover:scale-105 transition-all duration-300">
               <div
-                className={`text-4xl md:text-5xl lg:text-6xl font-bold ${stat.color} mb-3 stat-counter transition-all duration-300`}
+                className={`text-4xl md:text-5xl lg:text-6xl font-bold ${stat.color} mb-3 stat-counter transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(250,204,20,0.3)]`}
               >
                 {stat.suffix?.includes("$") && "$"}
                 {animatedValues[index].toLocaleString()}
